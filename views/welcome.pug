@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  .inner 
+    h1 Welcome
+
+    ul
+      li
+        form(method='post' action='/searchBol')
+          label.label(for='vin') Find Existing BOL
+          input(name='vin' type='text' placeholder='VIN')
+          input(name='submit' type='submit' value='Search')
+      li Or
+      li
+        a(href='/newBol') Start New BOL

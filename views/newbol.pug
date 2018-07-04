@@ -1,0 +1,46 @@
+extends layout
+
+block content
+  .inner
+    form.form(method='post' action='/createBol')
+      label(for='vin') Vin:
+      input(name='vin' type='text')
+      label(for='customerName') Customer Name:
+      input(for='customerName' type='text')
+      label(for='driver') Driver:
+      select(name='driver')
+        each driver in h.drivers
+          option(value=driver.name)=driver.name
+      label(for='googleAddress') Google Address:
+      input(type="text" id="googleAddress" name="googleAddress" value=`${!bol.location ? '' : bol.location.googleAddress}` autocomplete="off")
+      .getPosBtn Get Current Location
+      label(for="lng") Address Lng
+      input(type="text" id="lng" name="coordinates[0]" value=`${!bol.location ? '' : bol.location.coordinates[0]}`)
+      label(for="lat") Address Lat
+      input(type="text" id="lat" name="coordinates[1]" value=`${!bol.location ? '' : bol.location.coordinates[1]}`)
+      label(for='address') Address 
+      label.footnote(for='address') *only needed if using current position feature.
+      input(name='address' type='text')
+      label(for='damage') Damage?
+      label(for='damage') Yes
+        input(name='damage' type='radio' value='true')
+      label(for='damage') No
+        input(name='damage' type='radio' value='false')
+      input(type='submit' value='submit')
+  script.
+    const googleAddress = document.querySelector('#googleAddress')
+    const lat = document.querySelector('#lat')
+    const lng = document.querySelector('#lng')
+    const getPosBtn = document.querySelector('.getPosBtn')
+
+    getPosBtn.addEventListener('click', getPos)
+
+    function getPos() {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        lat.value = position.coords.latitude
+        lng.value = position.coords.longitude
+        console.log(position.coords.latitude, position.coords.longitude);
+      });
+      googleAddress.value = ''
+      googleAddress.placeholder = 'Current Position Selected'
+    }

@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  .inner
+    .upload
+      form(method='post' enctype='multipart/form-data' action=`/uploadMultiple/${bol.vin}`)
+        label(for='file') New Photo Upload:
+        input(type='file' name='file' id='file' multiple)
+          //-  accept='image/gif, image/png, image/jpeg'
+        input(name='submit' type='submit' value='Upload')
+        a.button(href=`/addBolSig/${bol.vin}`) Done

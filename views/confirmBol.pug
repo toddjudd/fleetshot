@@ -1,0 +1,35 @@
+extends layout
+
+block content
+  .inner
+    .card
+      .details
+        .details_vin
+          .details_vin-label VIN:
+          .details_vin-data=bol.vin
+        .details_created
+          .details_created-label Created:
+          .details_created-data #{moment(bol.created).calendar()}
+        .details_damage
+          .details_damage-label Damage:
+          .details_damage-data=(bol.damage? 'Yes' : 'No')
+        .details_location
+          .details_location-label location:
+          .details_location-data #{bol.location.googleAddress || bol.location.address}
+          img.single_map.details_location-map(src=h.staticMap(bol.location.coordinates))
+        .details_photos
+          .details_photos-label Photos:
+          each photo in bol.photos
+            if photo != 'custSig.png' && photo != 'driveSig.png'
+              img.details_photos-photo(src=`/bols/${bol.vin}/${photo}`)
+        .details_signatures
+          img.details_signatures-customer(src=bol.custSigPath.replace('./public',''))
+          .details_signatures-customerName Customer: #{bol.customerName} 
+          .details_signatures-date Date: #{moment(bol.signedDate).calendar()}
+        .details_signatures-driver
+          img.details_signatures-driver(src=bol.driveSigPath.replace('./public',''))
+          .details_signatures-driver Driver: #{bol.driver}
+          .details_signatures-date Date: #{moment(bol.signedDate).calendar()}
+      form.form(method='post' aciton=`/confirmBol/${bol.vin}`)
+        input(name='customerEmail' type='email' placeholder='somebody@email.com')
+        input(name='submit' type='submit' value='Confirm')
