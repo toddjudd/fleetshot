@@ -20,11 +20,11 @@ router.post('/register',
   authController.login
 )
 //bol
-router.post('/searchBol', bolController.findBol)
 router.get('/newBol', bolController.newBol)
 router.post('/createBol', 
   bolController.createBolDir,
-  bolController.createBol
+  catchErrors(bolController.checkVin),
+  catchErrors(bolController.createBol)
 )
 //bol photos
 router.get('/addBolPhotos/:vin', bolController.addBolPhotos)
@@ -42,11 +42,13 @@ router.post('/addBolSig/:vin', bolController.saveBolSignatures)
 //bol confirmation
 router.get('/confirmBol/:vin', bolController.confirmBol)
 router.post('/confirmBol/:vin', 
-  bolController.updateCustomerInfo,
   bolController.saveBolConfirmation,
-  pdfController.sendCustomerPDF,
-  pdfController.savePDF
+  bolController.sendCustomerPDF
+  // pdfController.savePDF
 )
+//search BOLs
+router.post('/searchBol', bolController.findBols)
+router.get('/bol/:vin', bolController.getBol)
 //testing routes
 router.post('/json', siteController.returnPostJson)
 

@@ -2,10 +2,16 @@ extends layout
 
 block content
   .inner
-    .upload
-      form(method='post' enctype='multipart/form-data' action=`/uploadMultiple/${bol.vin}`)
-        label(for='file') New Photo Upload:
-        input(type='file' name='file' id='file' multiple)
-          //-  accept='image/gif, image/png, image/jpeg'
-        input(name='submit' type='submit' value='Upload')
-        a.button(href=`/addBolSig/${bol.vin}`) Done
+    .card
+      .photos
+        each photo in bol.photos
+          if photo != 'custSig.png' && photo != 'driveSig.png'
+            img.details_photos-photo(src=`/bols/${bol.vin}/${photo}`)
+      .upload
+        form(method='post' enctype='multipart/form-data' action=`/uploadMultiple/${bol.vin}`)
+          label(for='file') New Photo Upload:
+          input(type='file' name='file' id='file' multiple)
+            //-  accept='image/gif, image/png, image/jpeg'
+          input.submit(name='submit' type='submit' value='Upload')
+          a(href=`/addBolSig/${bol.vin}`)
+            .button Done

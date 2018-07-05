@@ -1,0 +1,32 @@
+.welcome-menu {
+  list-style-type: none;
+  padding: 0;
+  .form {
+    form {
+      label {
+        font-size: 1.5em;
+      }
+      .submit {
+        background-color: lighten($blue, 10%);
+        color: $black;
+      }
+    }
+  }
+  .separator {
+    text-align: center;
+    font-size: 1.5em;
+    width: 100%
+  }
+  .link {
+    width: 95%;
+    margin: auto;
+    text-align: center;
+    background-color: lighten($blue, 10%);
+    color: $black;
+    padding: 10px;
+  }
+  .link-label {
+    font-size: 1.5em;
+    padding: 10px 20px;
+  }
+}

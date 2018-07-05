@@ -2,32 +2,53 @@ extends layout
 
 block content
   .inner
-    form.form(method='post' action='/createBol')
+    form.form.newBol(method='post' action='/createBol' onsubmit="return validateForm()")
       label(for='vin') Vin:
-      input(name='vin' type='text')
+      input(name='vin' type='text' value=(bol.vin || ''))
+      p.error.vin-error VIN must be filled out
       label(for='customerName') Customer Name:
-      input(for='customerName' type='text')
+      input(name='customerName' type='text' value=(bol.customerName || ''))
+      p.error.customerName-error CustomerName must be filled out
       label(for='driver') Driver:
       select(name='driver')
         each driver in h.drivers
           option(value=driver.name)=driver.name
-      label(for='googleAddress') Google Address:
+      p.error.address-error An address must be filled out
+      label(for='googleAddress' value=(bol.googleAddress || '')) Google Address:
       input(type="text" id="googleAddress" name="googleAddress" value=`${!bol.location ? '' : bol.location.googleAddress}` autocomplete="off")
+      p.separator - or -
       .getPosBtn Get Current Location
       label(for="lng") Address Lng
-      input(type="text" id="lng" name="coordinates[0]" value=`${!bol.location ? '' : bol.location.coordinates[0]}`)
+      input(type="text" id="lng" name="coordinates[0]" value=`${bol.coordinates ? bol.coordinates[0] : ''}`)
+      p.error.lng-error Lng must be filled out
       label(for="lat") Address Lat
-      input(type="text" id="lat" name="coordinates[1]" value=`${!bol.location ? '' : bol.location.coordinates[1]}`)
-      label(for='address') Address 
+      input(type="text" id="lat" name="coordinates[1]" value=`${bol.coordinates ? bol.coordinates[1] : ''}`)
+      p.error.lat-error Lat must be filled out
+      label.withnote(for='address') Address 
       label.footnote(for='address') *only needed if using current position feature.
-      input(name='address' type='text')
+      input(name='address' type='text' value=(bol.address || ''))
       label(for='damage') Damage?
-      label(for='damage') Yes
-        input(name='damage' type='radio' value='true')
-      label(for='damage') No
-        input(name='damage' type='radio' value='false')
-      input(type='submit' value='submit')
+      p.error.damage-error Damage must be filled out
+      label.radio-label(for='damage') Yes
+        input.radio(id='damage-yes' name='damage' type='radio' value='true')
+      label.radio-label(for='damage') No&nbsp;
+        input.radio(id='damage-no' name='damage' type='radio' value='false')
+      input.submit(type='submit' value='Submit')
   script.
+    const vin = document.querySelector('input[name=vin]')
+    const customerName = document.querySelector('input[name=customerName]')
+    const address = document.querySelector('input[name=address]')
+    const damageYes = document.querySelector('#damage-yes')
+    const damageNo = document.querySelector('#damage-no')
+
+    const errors = [...document.querySelectorAll('.error')]
+    const errvin = document.querySelector('.vin-error')
+    const errcustomerName = document.querySelector('.customerName-error')
+    const errlng = document.querySelector('.lng-error')
+    const errlat = document.querySelector('.lat-error')
+    const erraddress = document.querySelector('.address-error')
+    const errdamage = document.querySelector('.damage-error')
+
     const googleAddress = document.querySelector('#googleAddress')
     const lat = document.querySelector('#lat')
     const lng = document.querySelector('#lng')
@@ -43,4 +64,37 @@ block content
       });
       googleAddress.value = ''
       googleAddress.placeholder = 'Current Position Selected'
+    }
+
+    function validateForm() {
+      err = 0
+      errors.forEach(err => {
+        err.style.display = 'none'
+      })
+      if(vin.value =='') {
+        err++
+        errvin.style.display = 'block'
+      }
+      if(customerName.value ==''){ 
+        err++
+        errcustomerName.style.display = 'block'
+      }
+      if(lng.value =='') {
+        err++
+        errlng.style.display = 'block'
+      }
+      if(lat.value =='') {
+        err++
+        errlat.style.display = 'block'
+      }
+      if(address.value == '' && googleAddress.value == '') {
+        err++
+        erraddress.style.display = 'block'
+      }
+      if(!damageNo.checked && !damageYes.checked) {
+        err++
+        errdamage.style.display = 'block'
+      }
+      if (err) return false;
+      return true;
     }

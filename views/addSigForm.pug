@@ -1,24 +1,28 @@
 extends layout
 
 block content
-  .inner
-    h5 Customer Signature
-    canvas(id="customer-signature-pad" class="signature-pad" width=500 height=175)
-    .customer-signature-name=bol.customerName
-    .customer-signature-pad-controls
-      button(id='customer-done') Done
-      button(id='customer-clear') Clear
-    h5 Driver Signature
-    canvas(id="driver-signature-pad" class="signature-pad" width=500 height=175)
-    .driver-signature-name=bol.driver
-    .driver-signature-pad-controls
-      button(id='driver-done') Done
-      button(id='driver-clear') Clear
-    .signature-pad-controls
-      button(id='save') Save
+  .inner.signature
+    .card
+      h1 Customer Signature
+      .customer-signature-name=bol.customerName
+      canvas(id="customer-signature-pad" class="signature-pad" width=500 height=175)
+      .customer-signature-pad-controls
+        button(id='customer-done') Done
+        button.clear(id='customer-clear') Clear
+      h1 Driver Signature
+      .driver-signature-name=bol.driver
+      canvas(id="driver-signature-pad" class="signature-pad" width=500 height=175)
+      .driver-signature-pad-controls
+        button(id='driver-done') Done
+        button.clear(id='driver-clear') Clear
+      .signature-pad-error
+
+      .signature-pad-controls
+        button(id='save') Save
   script(src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js")
   script.
     var vin="#{bol.vin}"
+    var errMsg = document.querySelector('.signature-pad-error')
     driverDoneBool = false
     customerDoneBool = false
     var saveButton = document.getElementById('save');
@@ -107,15 +111,21 @@ block content
 
     function warnNoSig() {
       console.log('warnNoSig')
+      errMsg.innerHTML = 'Signatures must be filled out and you must click "Done"'
+      errMsg.classList.remove('wait')
       return
     }
 
     function warnWaiting() {
       console.log('warnWaiting')
+      errMsg.innerHTML = 'Submiting.. Please Wait'
+      errMsg.classList.add('wait')
       return
     }
 
     function warnError() {
+      errMsg.innerHTML = 'Something Happened... Please try again.'
+      errMsg.classList.remove('wait')
       console.log('warnWaiting')
       return
     }

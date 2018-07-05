@@ -1,0 +1,42 @@
+extends email-layout
+
+block content
+  //- curently in table elem
+  tr
+    td(colspan=2)
+      h1 What Title Do You Want
+  tr
+    td.label VIN:
+    td.data #{bol.vin}
+  tr
+    td.label Date:
+    td.data.date #{bol.emailDate}
+  tr
+    td.label Location:
+    td.data #{bol.location.googleAddress || bol.location.address}
+  tr
+    td.map(colspan='2')
+      img.single_map.details_location-map(src=h.staticMap(bol.location.coordinates))
+  tr
+    td.label Driver:
+    td.data #{bol.driver}
+  tr
+    td.label Damage:
+    td.driver #{bol.driver ? 'Yes' : 'No'}
+  tr
+    td.label(colspan='2') Photos:
+  tr
+    td.photos(colspan='2')
+      each photo in bol.photos
+        if photo != 'custSig.png' && photo != 'driveSig.png'
+          img.photo(src=`http://${process.env.DOMAIN}/bols/${bol.vin}/${photo}`)
+  tr
+    td.signature
+      img.sigImg(src=`http://${process.env.DOMAIN}/bols/${bol.vin}/driveSig.png`)
+    td.signature      
+      img.sigImg(src=`http://${process.env.DOMAIN}/bols/${bol.vin}/custSig.png`)
+  tr
+    td
+      p #{bol.driver}
+    td
+      p #{bol.customerName}

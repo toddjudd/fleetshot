@@ -21,6 +21,9 @@ mongoose.connection.on('error', (err) => {
 require('./models/User.js');
 require('./models/Bol.js');
 
+//test mail app
+// require('./handlers/mail')
+
 // Start our app!
 const app = require('./app');
 app.set('port', process.env.PORT || 7777);

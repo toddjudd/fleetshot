@@ -1,0 +1,120 @@
+.details {
+  &_vin {
+    &-label {
+      display: inline-block;
+      font-size: 1.75em;
+    }
+    &-data {
+      display: inline-block;
+      float: right;
+      font-size: 1.6em;
+    }
+  }
+  &_created {
+    &-label {
+      display: inline-block;
+      font-size: 1.75em;
+
+    }
+    &-data {
+      display: inline-block;
+      float: right;
+      font-size: 1.6em;
+      
+    }
+  }
+  &_damage {
+    &-label {
+      font-size: 1.75em;
+      display: inline-block;
+
+    }
+    &-data {
+      display: inline-block;
+      float: right;
+      font-size: 1.6em;
+      
+    }
+  }
+  &_location {
+    &-label {
+      font-size: 1.75em;
+      display: inline-block;
+
+    }
+    &-data {
+      display: inline-block;
+      float: right;
+      font-size: 1.6em;
+      max-width: 500px;
+      white-space: pre-wrap;      /* CSS3 */   
+      white-space: -moz-pre-wrap; /* Firefox */    
+      white-space: -pre-wrap;     /* Opera <7 */   
+      white-space: -o-pre-wrap;   /* Opera 7 */    
+      word-wrap: break-word;      /* IE */
+      text-align: right;
+      
+    }
+  }
+  &_photos {
+    padding: 10px 0;
+    &-label {
+      font-size: 1.75em;
+
+    }
+    &-photo {
+      max-height: 200px;
+      width: auto;
+    }
+  }
+  &_signatures {
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+    width: 100%;
+    &-customer {
+      &-photo {
+        // border-bottom:2px solid $blue;
+      }
+      &-name {
+
+      }
+    }
+    &-driver {
+      // display: inline-block;
+      &-photo {
+        // border-bottom:2px solid $blue;
+      }
+      &-name {
+        
+      }
+    }
+    &-date {
+
+    }
+  }
+  &_driver {
+    &-label {
+
+    }
+    &-data {
+      
+    }
+  }
+  &_custoomerEmail {
+    &-label {
+
+    }
+    &-data {
+      
+    }
+  }
+  form {
+    margin-top: 5px;
+  }
+  .submit {
+    background-color: lighten($blue, 10%);
+    color: $black;
+    margin: 5px 0 0 0;
+  }
+}

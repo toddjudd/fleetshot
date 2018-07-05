@@ -2,14 +2,15 @@ extends layout
 
 block content
   .inner 
-    h1 Welcome
-
-    ul
-      li
-        form(method='post' action='/searchBol')
-          label.label(for='vin') Find Existing BOL
-          input(name='vin' type='text' placeholder='VIN')
-          input(name='submit' type='submit' value='Search')
-      li Or
-      li
-        a(href='/newBol') Start New BOL
+    .card
+      h1 Welcome
+      ul.welcome-menu
+        li.form
+          form(method='post' action='/searchBol')
+            label.label(for='vin') Find Existing BOL
+            input(name='vin' type='text' placeholder='VIN')
+            input.submit(name='submit' type='submit' value='Search')
+        li.separator - Or -
+        li.link-label Start New BOL
+        a(href='/newBol')  
+          li.link Start

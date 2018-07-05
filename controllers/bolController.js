@@ -4,6 +4,8 @@ const Bol = mongoose.model('Bol')
 const slug = require('slugs');
 const fs = require('fs')
 const bsf = require('base64-img')
+const mail = require('../handlers/mail.js')
+const h = require('./../helpers')
 
 exports.newBol = (req, res) => {
   res.render('newbol', {title: 'Create New BOL', bol: req.body || {}})
@@ -24,6 +26,7 @@ exports.createBol = async (req, res, next) => {
   req.body.location.coordinates = req.body.coordinates
   req.body.location.googleAddress = req.body.googleAddress
   req.body.location.address = req.body.address
+  console.log(req.body)
   //save bol
   const bol = new Bol(req.body)
   const save = await bol.save()
@@ -35,8 +38,20 @@ exports.editBol = (req, res) => {
   res.render('newBol', {title: 'Create New BOL', bol: req.body})
 }
 
+exports.checkVin = async (req, res, next) => {
+  const vin = await Bol.findOne({vin: req.body.vin})
+  if (vin){
+    req.flash('error', 'Vin has already been used')
+    res.render('newbol', {title: 'Create New BOL', bol: req.body || {}, flashes: req.flash()})
+    return
+  } else {
+    return next();
+  }
+}
+
 exports.addBolPhotos = async (req, res) => {
   const bol = await Bol.findOne({ vin: req.params.vin })
+  bol.photos = await showDir(bol.path)
   res.render('addPhotoForm', {title: 'Add BOL Photos', bol})
 }
 
@@ -69,24 +84,45 @@ exports.saveBolSignatures = async (req, res) => {
 
 exports.confirmBol = async (req, res) => {
   const bol = await Bol.findOne({ vin: req.params.vin })
-
   bol.photos = await showDir(bol.path)
-  console.log(bol.photos)
-
   res.render('confirmBol', {title: 'Confirm BOL', bol})
 }
 
-exports.updateCustomerInfo = (req, res) => {
-  
+exports.saveBolConfirmation = async(req, rest, next) => {
+  req.bol = await Bol.findOne({ vin: req.params.vin }) 
+  req.bol.photos = await showDir(req.bol.path)
+  req.bol.customerEmail = req.body.customerEmail
+  req.bol.confirmedDate = moment()
+  update = await Bol.update({vin:req.params.vin}, req.bol, {upsert:false})
+  return next();
 }
 
-exports.saveBolConfirmation = (req, res) => {
-  
+exports.sendCustomerPDF = async (req, res) => {
+  req.bol.emailDate = moment(req.bol.confirmedDate).format('YYYY-MM-DD')
+  await mail.sendPDF({
+    customerEmail: req.bol.customerEmail, 
+    subject: `BOL VIN: ${req.bol.vin}`, 
+    filename: 'bol-pdf',
+    bol: req.bol,
+    h,
+    moment
+  })
+  req.flash('success', `A PDF copy has been emailed ${req.bol.customerName}`)
+  res.redirect('/')
 }
 
-exports.findBol = (req, res) => {
-  res.send('working on it')
+exports.findBols = async (req, res) => {
+  regex = new RegExp(req.body.vin, 'gi')
+  bols = await Bol.find({vin: regex})
+  res.render('Bols', {title: 'Search for BOL', bols})
 }
+
+exports.getBol = async (req, res) => {
+  bol = await Bol.findOne({ vin: req.params.vin }) 
+  bol.photos = await showDir(bol.path)
+  res.render('bol', {title: `BOL Record`, bol})
+}
+
 
 function showDir(dir) {
   return new Promise(function(resolve, reject){

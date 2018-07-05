@@ -32,6 +32,5 @@ block content
             img.details_signatures-driver-photo(src=bol.driveSigPath.replace('./public',''))
             .details_signatures-driver-name Driver: #{bol.driver}
             .details_signatures-date Date: #{moment(bol.signedDate).calendar()}
-        form(method='post' aciton=`/confirmBol/${bol.vin}`)
-          input(name='customerEmail' type='email' placeholder='somebody@email.com')
-          input.submit(name='submit' type='submit' value='Confirm')
+        .details_customerEmail
+          .details_customerEmail-Data #{bol.customerEmail}

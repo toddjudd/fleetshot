@@ -72,7 +72,7 @@ section {
  */
 h1 {
   font-size: 2em;
-  margin: 0.67em 0; }
+  margin: 0.6em 0; }
 
 /* Grouping content
    ========================================================================== */
@@ -513,6 +513,10 @@ label {
     padding-bottom: 2rem;
     margin-bottom: 2rem;
     border-bottom: 1px solid #e6e6e6; }
+  .form .submit {
+    background-color: #46a5ea;
+    color: #303030;
+    margin: 5px 0 0 0; }
 
 .search {
   position: relative;
@@ -693,16 +697,26 @@ label {
     margin-right: 1rem; } }
 
 .table {
-  width: 100%; }
+  width: 100%;
+  padding: 10px;
+  background-color: white; }
   .table td {
     padding: 5px; }
+  .table tbody tr:nth-child(odd) {
+    background: #e6e6e6; }
   .table tr:nth-child(even) {
     background: white; }
-  .table tr:nth-child(odd):not(:first-child) {
-    background: #f7f7f7; }
   .table thead tr {
     background: #303030;
     color: white; }
+  .table tbody tr {
+    background-color: white; }
+  .table .row-link {
+    text-decoration: underline;
+    -webkit-text-decoration-color: #1A8FE3;
+            text-decoration-color: #1A8FE3; }
+  .table .ct {
+    text-align: center; }
 
 .stores {
   display: -ms-flexbox;
@@ -1115,5 +1129,227 @@ pre.error {
   background: white;
   line-height: 3;
   white-space: pre-line; }
+
+.details_vin-label {
+  display: inline-block;
+  font-size: 1.75em; }
+
+.details_vin-data {
+  display: inline-block;
+  float: right;
+  font-size: 1.6em; }
+
+.details_created-label {
+  display: inline-block;
+  font-size: 1.75em; }
+
+.details_created-data {
+  display: inline-block;
+  float: right;
+  font-size: 1.6em; }
+
+.details_damage-label {
+  font-size: 1.75em;
+  display: inline-block; }
+
+.details_damage-data {
+  display: inline-block;
+  float: right;
+  font-size: 1.6em; }
+
+.details_location-label {
+  font-size: 1.75em;
+  display: inline-block; }
+
+.details_location-data {
+  display: inline-block;
+  float: right;
+  font-size: 1.6em;
+  max-width: 500px;
+  white-space: pre-wrap;
+  /* CSS3 */
+  white-space: -moz-pre-wrap;
+  /* Firefox */
+  white-space: -pre-wrap;
+  /* Opera <7 */
+  white-space: -o-pre-wrap;
+  /* Opera 7 */
+  word-wrap: break-word;
+  /* IE */
+  text-align: right; }
+
+.details_photos {
+  padding: 10px 0; }
+  .details_photos-label {
+    font-size: 1.75em; }
+  .details_photos-photo {
+    max-height: 200px;
+    width: auto; }
+
+.details_signatures {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+      flex-direction: row;
+  -ms-flex-pack: justify;
+      justify-content: space-between;
+  width: 100%; }
+
+.details form {
+  margin-top: 5px; }
+
+.details .submit {
+  background-color: #46a5ea;
+  color: #303030;
+  margin: 5px 0 0 0; }
+
+.welcome-menu {
+  list-style-type: none;
+  padding: 0; }
+  .welcome-menu .form form label {
+    font-size: 1.5em; }
+  .welcome-menu .form form .submit {
+    background-color: #46a5ea;
+    color: #303030; }
+  .welcome-menu .separator {
+    text-align: center;
+    font-size: 1.5em;
+    width: 100%; }
+  .welcome-menu .link {
+    width: 95%;
+    margin: auto;
+    text-align: center;
+    background-color: #46a5ea;
+    color: #303030;
+    padding: 10px; }
+  .welcome-menu .link-label {
+    font-size: 1.5em;
+    padding: 10px 20px; }
+
+.newBol label {
+  font-size: 1.25em; }
+
+.newBol .getPosBtn {
+  width: 100%;
+  margin: 8px auto;
+  text-align: center;
+  background-color: #46a5ea;
+  color: #303030;
+  padding: 10px; }
+
+.newBol .separator {
+  text-align: center;
+  margin: 0; }
+
+.newBol .submit {
+  background-color: #46a5ea;
+  color: #303030; }
+
+.newBol .radio-label {
+  min-width: 100px;
+  margin: 0 20px; }
+
+.newBol .radio {
+  max-width: 100px; }
+
+.newBol .footnote {
+  color: #E50714;
+  float: right; }
+
+.newBol .withnote {
+  float: left; }
+
+.newBol .error {
+  display: none;
+  color: #E50714;
+  margin: 0;
+  padding: 0; }
+
+.photos {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap; }
+  .photos .details_photos-photo {
+    max-height: 200px;
+    width: auto; }
+
+.upload form .submit {
+  background-color: #46a5ea;
+  color: #303030;
+  margin: 5px 0 0 0; }
+
+.upload form .button {
+  font-size: 1em;
+  width: 100%;
+  margin: 10px 0;
+  text-align: center;
+  background-color: #46a5ea;
+  color: #303030;
+  padding: 10px;
+  font-weight: normal; }
+
+.signature canvas {
+  border-top: 2px solid #1A8FE3;
+  border-right: 4px solid #1A8FE3;
+  border-bottom: 3px solid #1A8FE3;
+  border-left: 2px solid #1A8FE3;
+  width: 500;
+  height: 175; }
+
+.signature .customer-signature-name {
+  font-size: 1.5em; }
+
+.signature .customer-signature-pad-controls button {
+  background-color: #46a5ea;
+  color: #303030;
+  margin: 5px;
+  padding: 10px 20px;
+  border: none;
+  font-size: 1.2em; }
+
+.signature .customer-signature-pad-controls .done {
+  background-color: #6610F2;
+  color: #1A8FE3;
+  font-weight: bold; }
+
+.signature .customer-signature-pad-controls .clear {
+  background-color: #E6C229;
+  color: #1A8FE3; }
+
+.signature .driver-signature-name {
+  font-size: 1.5em; }
+
+.signature .driver-signature-pad-controls button {
+  background-color: #46a5ea;
+  color: #303030;
+  margin: 5px;
+  padding: 10px 20px;
+  border: none;
+  font-size: 1.2em; }
+
+.signature .driver-signature-pad-controls .done {
+  background-color: #6610F2;
+  color: #1A8FE3;
+  font-weight: bold; }
+
+.signature .driver-signature-pad-controls .clear {
+  background-color: #E6C229;
+  color: #1A8FE3; }
+
+.signature .signature-pad-controls button {
+  background-color: #46a5ea;
+  color: #303030;
+  margin: 5px;
+  padding: 10px 20px;
+  border: none;
+  font-size: 1.2em; }
+
+.signature .signature-pad-error {
+  color: #E50714;
+  font-size: 1em; }
+
+.signature .wait {
+  color: #1A8FE3; }
 
 /*# sourceMappingURL=style.css.map*/

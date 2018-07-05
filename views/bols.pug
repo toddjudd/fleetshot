@@ -1,0 +1,37 @@
+extends layout
+
+block content
+  .inner
+    form.form(method='post' action='/searchBol')
+      label.label(for='vin') Find Existing BOL
+      input(name='vin' type='text' placeholder='VIN')
+      input.submit(name='submit' type='submit' value='Search')
+    .bols
+      table.table
+        thead
+          tr
+            th Date
+            th Time
+            th Location
+            th VIN
+            th Driver
+            th Damage
+            th Customer Email
+        tbody
+          each bol in bols
+              tr.clickable
+                td=moment(bol.confirmedDate).format("DD MMM YYYY")
+                td=moment(bol.confirmedDate).format("hh:mm a")
+                td #{bol.location.googleAddress || bol.location.address}
+                td.ct
+                  a.row-link(href=`/bol/${bol.vin}`)=bol.vin
+                td=bol.Driver
+                td #{bol.damage ? 'Yes' : 'No'}
+                td #{bol.customerName} &lt#{bol.customerEmail}&gt
+  script.
+    //- rowLinks = [...document.querySelectorAll('.row-link')]
+    //- rowLinks.forEach(link => {
+    //-   link.parentElement.parentElement.addEventListener('click', function(e) {
+    //-     e.target.parentElement.querySelector('.row-link').click()
+    //-   })
+    //- })

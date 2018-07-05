@@ -37,6 +37,7 @@ const BolSchema = new mongoose.Schema({
   custSigURI: String,
   signedDate: Date,
   customerEmail: String,
+  confirmedDate: Date,
   created: {
     type: Date,
     default: Date.now

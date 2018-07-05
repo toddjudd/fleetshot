@@ -1,16 +1,34 @@
 .table {
   width: 100%;
+  padding: 10px;
+  background-color: white;
   td {
     padding: 5px;
   }
+  tbody tr:nth-child(odd) {
+    background: $grey;
+  }
   tr:nth-child(even) {
     background: white;
-  }
-  tr:nth-child(odd):not(:first-child) {
-    background: #f7f7f7;
   }
   thead tr {
     background: $black;
     color: white;
   }
+  tbody tr{
+    background-color: white;
+  }
+  // .clickable {
+  //   cursor: pointer;
+  // }
+  .row-link {
+    text-decoration: underline;
+    text-decoration-color: $blue;
+  }
+  .ct {
+    text-align: center;
+  }
+  
 }
+
+
