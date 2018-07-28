@@ -1,4 +1,15 @@
 .details {
+  &_id {
+    &-label {
+      display: inline-block;
+      font-size: 1.75em;
+    }
+    &-data {
+      display: inline-block;
+      float: right;
+      font-size: 1.6em;
+    }
+  }
   &_vin {
     &-label {
       display: inline-block;
@@ -53,7 +64,6 @@
       white-space: -o-pre-wrap;   /* Opera 7 */    
       word-wrap: break-word;      /* IE */
       text-align: right;
-      
     }
   }
   &_photos {
@@ -111,6 +121,10 @@
   }
   form {
     margin-top: 5px;
+  }
+  .email-error {
+    color: $red;
+    display: none;
   }
   .submit {
     background-color: lighten($blue, 10%);

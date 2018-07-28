@@ -9,7 +9,7 @@ const multerOptions = {
 }
 const storage = multer.diskStorage({
   destination: function (req, file, callback) {
-    callback(null, process.env.BOLDIR+'/'+req.params.vin);
+    callback(null, process.env.BOLDIR+'/'+req.params.id);
   },
   filename: function (req, file, callback) {
     const extension = mime.extension(file.mimetype)
@@ -48,7 +48,7 @@ exports.write = (req, res, next) => {
   }
   const extension = req.file.mimetype.split('/')[1]
   const file = `${uuid.v4()}.${extension}`
-  fs.writeFile(process.env.BOLDIR+'/'+req.params.vin+'/'+file, req.file.buffer, function(err) {
+  fs.writeFile(process.env.BOLDIR+'/'+req.params.id+'/'+file, req.file.buffer, function(err) {
     if (err) {
       return console.log(err);
     }
@@ -69,8 +69,8 @@ exports.resize = async (req, res) => {
   req.body.photo = `${uuid.v4()}.${extension}`
   const photo = await jimp.read(req.file.buffer);
   await photo.resize(800, jimp.AUTO);
-  await photo.write(process.env.BOLDIR+'/'+req.params.vin+'/'+req.body.photo)
-  res.redirect(`/addBolPhotos/${req.params.vin}`)
+  await photo.write(process.env.BOLDIR+'/'+req.params.id+'/'+req.body.photo)
+  res.redirect(`/addBolPhotos/${req.params.id}`)
 }
 
 exports.postSingleFileInputTest = (req, res) => {

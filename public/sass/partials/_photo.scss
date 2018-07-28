@@ -15,6 +15,10 @@
     input{
 
     }
+    .photoCount-error {
+      display: none;
+      color: $red;
+    }
     .submit {
       background-color: lighten($blue, 10%);
       color: $black;
@@ -23,7 +27,7 @@
     a {
 
     }
-    .button {
+    .doneButton {
       font-size: 1em;
       width: 100%;
       margin: 10px 0;

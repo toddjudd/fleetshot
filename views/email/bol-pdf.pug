@@ -4,7 +4,10 @@ block content
   //- curently in table elem
   tr
     td(colspan=2)
-      h1 What Title Do You Want
+      h1 #{bol.type} BOL Record
+  tr
+    td.label BOL:
+    td.data #{bol.id}
   tr
     td.label VIN:
     td.data #{bol.vin}
@@ -13,7 +16,7 @@ block content
     td.data.date #{bol.emailDate}
   tr
     td.label Location:
-    td.data #{bol.location.googleAddress || bol.location.address}
+    td.data #{bol.location.city}, #{bol.location.state} #{bol.location.postal}
   tr
     td.map(colspan='2')
       img.single_map.details_location-map(src=h.staticMap(bol.location.coordinates))
@@ -22,19 +25,19 @@ block content
     td.data #{bol.driver}
   tr
     td.label Damage:
-    td.driver #{bol.driver ? 'Yes' : 'No'}
+    td.driver=(bol.damage? 'Yes' : 'No')
   tr
     td.label(colspan='2') Photos:
   tr
     td.photos(colspan='2')
       each photo in bol.photos
         if photo != 'custSig.png' && photo != 'driveSig.png'
-          img.photo(src=`http://${process.env.DOMAIN}/bols/${bol.vin}/${photo}`)
+          img.photo(src=`http://${process.env.DOMAIN}/bols/${bol.id}/${photo}`)
   tr
     td.signature
-      img.sigImg(src=`http://${process.env.DOMAIN}/bols/${bol.vin}/driveSig.png`)
+      img.sigImg(src=`http://${process.env.DOMAIN}/bols/${bol.id}/driveSig.png`)
     td.signature      
-      img.sigImg(src=`http://${process.env.DOMAIN}/bols/${bol.vin}/custSig.png`)
+      img.sigImg(src=`http://${process.env.DOMAIN}/bols/${bol.id}/custSig.png`)
   tr
     td
       p #{bol.driver}

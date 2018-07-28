@@ -3,26 +3,29 @@ extends layout
 block content
   .inner
     .card
-      h1=title
+      h1 #{bol.type} BOL Record
       .details
+        .details_id
+          .details_id-label BOL:
+          .details_id-data=bol.id
         .details_vin
           .details_vin-label VIN:
           .details_vin-data=bol.vin
         .details_created
           .details_created-label Created:
-          .details_created-data #{moment(bol.created).calendar()}
+          .details_created-data #{moment(bol.created).format('HH:MM')} #{moment(bol.created).format('MM-DD-YYYY')}
         .details_damage
           .details_damage-label Damage:
           .details_damage-data=(bol.damage? 'Yes' : 'No')
         .details_location
-          .details_location-label location:
-          .details_location-data #{bol.location.googleAddress || bol.location.address}
+          .details_location-label Location:
+          .details_location-data #{bol.location.city}, #{bol.location.state} #{bol.location.postal}
           img.single_map.details_location-map(src=h.staticMap(bol.location.coordinates))
         .details_photos
           .details_photos-label Photos:
           each photo in bol.photos
             if photo != 'custSig.png' && photo != 'driveSig.png'
-              img.details_photos-photo(src=`/bols/${bol.vin}/${photo}`)
+              img.details_photos-photo(src=`/bols/${bol.id}/${photo}`)
         .details_signatures
           .details_signatures-customer
             img.details_signatures-customer-photo(src=bol.custSigPath.replace('./public',''))

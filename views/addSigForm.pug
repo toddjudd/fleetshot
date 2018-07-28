@@ -5,13 +5,13 @@ block content
     .card
       h1 Customer Signature
       .customer-signature-name=bol.customerName
-      canvas(id="customer-signature-pad" class="signature-pad" width=500 height=175)
+      canvas(id="customer-signature-pad" class="signature-pad")
       .customer-signature-pad-controls
         button(id='customer-done') Done
         button.clear(id='customer-clear') Clear
       h1 Driver Signature
       .driver-signature-name=bol.driver
-      canvas(id="driver-signature-pad" class="signature-pad" width=500 height=175)
+      canvas(id="driver-signature-pad" class="signature-pad")
       .driver-signature-pad-controls
         button(id='driver-done') Done
         button.clear(id='driver-clear') Clear
@@ -22,6 +22,7 @@ block content
   script(src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js")
   script.
     var vin="#{bol.vin}"
+    var id="#{bol.id}"
     var errMsg = document.querySelector('.signature-pad-error')
     driverDoneBool = false
     customerDoneBool = false
@@ -30,7 +31,12 @@ block content
     var driverCancelButton = document.getElementById('driver-clear');
     var customerDoneButton = document.getElementById('customer-done');
     var customerCancelButton = document.getElementById('customer-clear');
+    var custCanvasWidth = document.querySelector('.customer-signature-name')
+    var driverCanvasWidth = document.querySelector('.driver-signature-name')
+    var custCanvas = document.getElementById('customer-signature-pad')
+    var driverCanvas = document.getElementById('driver-signature-pad')
     var img = document.getElementById('img');
+
     var customerSignaturePad = new SignaturePad(document.getElementById('customer-signature-pad'), {
       backgroundColor: 'rgba(255, 255, 255, 1)',
       penColor: 'rgb(0, 0, 0)'
@@ -39,6 +45,9 @@ block content
       backgroundColor: 'rgba(255, 255, 255, 1)',
       penColor: 'rgb(0, 0, 0)'
     });
+
+    custCanvas.width = custCanvasWidth.offsetWidth > 600 ? 600 : custCanvasWidth.offsetWidth
+    driverCanvas.width = driverCanvasWidth.offsetWidth > 600 ? 600 : driverCanvasWidth.offsetWidth
 
     saveButton.addEventListener('click', function (e) {
       //validate signatures are 'done'
@@ -88,7 +97,7 @@ block content
 
     function submitFormData(data) {
       var xhr = new XMLHttpRequest();
-      xhr.open('post', `/addBolSig/${vin}`, true)
+      xhr.open('post', `/addBolSig/${id}`, true)
       xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
       xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
       xhr.onload = function (e) {
@@ -96,7 +105,7 @@ block content
           if (xhr.status === 200) {
             result = JSON.parse(xhr.responseText)
             if (result.status === 200) {
-              window.location.href = `/confirmBol/${vin}`
+              window.location.href = `/confirmBol/${id}`
             } else {
               warnError(result)
             }
@@ -129,3 +138,20 @@ block content
       console.log('warnWaiting')
       return
     }
+
+    function resizeCanvas() {
+      custCanvas.width = custCanvasWidth.offsetWidth > 600 ? 600 : custCanvasWidth.offsetWidth
+      driverCanvas.width = driverCanvasWidth.offsetWidth > 600 ? 600 : driverCanvasWidth.offsetWidth
+
+      driverDoneButton.classList.remove('done')
+      driverSignaturePad.on();
+
+      customerDoneButton.classList.remove('done')
+      customerSignaturePad.on();
+
+      driverDoneBool = false
+      customerDoneBool = false
+    }
+
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();

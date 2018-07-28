@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
+const apiController = require('../controllers/apiController');
 const authController = require('../controllers/authController');
 const siteController = require('../controllers/siteController');
 const bolController = require('../controllers/bolController');
@@ -20,35 +21,47 @@ router.post('/register',
   authController.login
 )
 //bol
-router.get('/newBol', bolController.newBol)
+router.get('/newPickUp', 
+  bolController.setTypePickup,
+  bolController.newBol
+)
+router.get('/newDelivery', 
+  bolController.setTypeDelivery,
+  bolController.newBol
+)
 router.post('/createBol', 
   bolController.createBolDir,
   catchErrors(bolController.checkVin),
   catchErrors(bolController.createBol)
 )
 //bol photos
-router.get('/addBolPhotos/:vin', bolController.addBolPhotos)
-router.post('/uploadphoto/:vin', 
+router.get('/addBolPhotos/:id', bolController.addBolPhotos)
+router.post('/uploadphoto/:id', 
   uploadController.upload,
   uploadController.write,
   uploadController.resize
 )
-router.post('/uploadMultiple/:vin',
+router.post('/uploadMultiple/:id',
   uploadController.uploadMultiple
 )
 //bol signatures
-router.get('/addBolSig/:vin', bolController.addBolSignatures)
-router.post('/addBolSig/:vin', bolController.saveBolSignatures)
+router.get('/addBolSig/:id', bolController.addBolSignatures)
+router.post('/addBolSig/:id', bolController.saveBolSignatures)
 //bol confirmation
-router.get('/confirmBol/:vin', bolController.confirmBol)
-router.post('/confirmBol/:vin', 
+router.get('/confirmBol/:id', bolController.confirmBol)
+router.post('/confirmBol/:id', 
   bolController.saveBolConfirmation,
   bolController.sendCustomerPDF
   // pdfController.savePDF
 )
 //search BOLs
+router.get('/searchBol', bolController.getBols)
 router.post('/searchBol', bolController.findBols)
-router.get('/bol/:vin', bolController.getBol)
+router.get('/bol/:id', bolController.getBol)
+//Delete BOLs
+router.get('/delete/bol/:id', bolController.deleteBolById)
+//GeoCoding Api
+router.get('/api/geocodeing/lat/:lat/lng/:lng', apiController.reverseGeocodeing)
 //testing routes
 router.post('/json', siteController.returnPostJson)
 

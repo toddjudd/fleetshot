@@ -6,11 +6,16 @@ const validator = require('validator');
 const mongodbErrorHandler = require('mongoose-mongodb-errors');
 
 const BolSchema = new mongoose.Schema({
+  id: {
+    type: Number,
+    unique: true,
+    required: 'Error 0000: Id Must be present, attempt restarting BOL Creation.'
+  },
+  status: String,
+  type: String,
   vin: {
     type: String,
-    required: 'Error 0000: Vin number must be present',
-    // if the vallidation below works then this can be removed
-    // unique: true
+    required: 'Error 0001: Vin number must be present.',
   },
   location: {
     type: {
@@ -19,16 +24,32 @@ const BolSchema = new mongoose.Schema({
     },
     coordinates: [{
       type: Number,
-      required: 'You must supply coordinates!'
+      required: 'Error 0003: You must supply coordinates!'
     }],
-    googleAddress:String,
-    address: String,
+    city: {
+      type: String,
+      required: 'Error 0004: You must provide a city'
+    },
+    state: {
+      type: String,
+      required: 'Error 0005: You must provide a State'
+    },
+    postal: {
+      type: String,
+      required: 'Error 0009: You must provide a Postal Code'
+    },
   },
-  customerName: String,
-  driver: String,
+  customerName: {
+    type: String,
+    required: 'Error 0006: You must provide a Customer Name'
+  },
+  driver: {
+    type: String,
+    required: 'Error 0007: You must provide a Driver'
+  },
   damage:{
    type: Boolean,
-   required: 'Damage needs to be recorded.'
+   required: 'Error 0008: Damage needs to be recorded.'
   },
   path: String,
   driveSigPath: String,
@@ -45,14 +66,8 @@ const BolSchema = new mongoose.Schema({
 });
 
 // This should validat that the vin is not already in the system. 
-// BolSchema.path('vin').validate(function(value, done) {
-//   this.model('Bol').count({ vin: value }, function(err, count) {
-//     if (err) {
-//       return done(err);
-//     } 
-//     // If `count` is greater than zero, "invalidate"
-//     done(!count);
-//   });
-// }, 'This VIN already exists');
+BolSchema.path('vin').validate(function(value, done) {
+  return value.length === 17
+}, 'Error 0002: Vin Must be 17 digits exactly. Check for white spaces, and character count, and try again.');
 
 module.exports = mongoose.model('Bol', BolSchema);

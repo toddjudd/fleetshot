@@ -10,19 +10,19 @@ block content
           .details_vin-data=bol.vin
         .details_created
           .details_created-label Created:
-          .details_created-data #{moment(bol.created).calendar()}
+          .details_created-data #{moment(bol.created).format('HH:MM')} #{moment(bol.created).format('MM-DD-YYYY')}
         .details_damage
           .details_damage-label Damage:
           .details_damage-data=(bol.damage? 'Yes' : 'No')
         .details_location
           .details_location-label location:
-          .details_location-data #{bol.location.googleAddress || bol.location.address}
+          .details_location-data #{bol.location.city} - #{bol.location.state}
           img.single_map.details_location-map(src=h.staticMap(bol.location.coordinates))
         .details_photos
           .details_photos-label Photos:
           each photo in bol.photos
             if photo != 'custSig.png' && photo != 'driveSig.png'
-              img.details_photos-photo(src=`/bols/${bol.vin}/${photo}`)
+              img.details_photos-photo(src=`/bols/${bol.id}/${photo}`)
         .details_signatures
           .details_signatures-customer
             img.details_signatures-customer-photo(src=bol.custSigPath.replace('./public',''))
@@ -32,6 +32,19 @@ block content
             img.details_signatures-driver-photo(src=bol.driveSigPath.replace('./public',''))
             .details_signatures-driver-name Driver: #{bol.driver}
             .details_signatures-date Date: #{moment(bol.signedDate).calendar()}
-        form(method='post' aciton=`/confirmBol/${bol.vin}`)
+        form(method='post' onsubmit='return validateEmail()' aciton=`/confirmBol/${bol.id}`)
           input(name='customerEmail' type='email' placeholder='somebody@email.com')
-          input.submit(name='submit' type='submit' value='Confirm')
+          p.email-error.error A valid email must be supplied
+          input.submit(name='submit' type='submit' value='Confirm' )
+  script.
+    const email = document.querySelector('input[name="customerEmail"]')
+    const emailerror = document.querySelector('.email-error')
+    var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    function validateEmail() {
+      emailerror.style.display = 'none'
+      if (!filter.test(email.value)) {
+        emailerror.style.display = 'block'
+        email.focus;
+        return false
+      }
+    }

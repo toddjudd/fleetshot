@@ -1,27 +1,29 @@
+# Fleet Shot
+
 ## What is this?
 
-Just you wait folks!
+A tool for generating pickup and delivery BOL's for fleat tracking.
 
-## Sample Data
+## Errors:
 
-To load sample data, run the following command in your terminal:
+#### BOL Creation Errors - triggered when atemption to initiate BOL Creation.
 
-```bash
-npm run sample
-```
+Error 0000: Id Must be present, attempt restarting BOL Creation
 
-If you have previously loaded in this data, you can wipe your database 100% clean with:
+Error 0001: Vin number must be present
 
-```bash
-npm run blowitallaway
-```
+Error 0002: Vin Must be 17 digits exactly. Check for white spaces, and character count, and try again
 
-That will populate 16 stores with 3 authors and 41 reviews. The logins for the authors are as follows:
+Error 0003: You must supply coordinates
 
-|Name|Email (login)|Password|
-|---|---|---|
-|Wes Bos|wes@example.com|wes|
-|Debbie Downer|debbie@example.com|debbie|
-|Beau|beau@example.com|beau|
+Error 0004: You must provide a city
 
+Error 0005: You must provide a State
 
+Error 0006: You must provide a Customer Name
+
+Error 0007: You must provide a Driver
+
+Error 0008: Damage needs to be recorded
+
+Error 0009: You must provide a Postal Code

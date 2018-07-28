@@ -2,31 +2,41 @@ extends layout
 
 block content
   .inner
-    form.form.newBol(method='post' action='/createBol' onsubmit="return validateForm()")
+    form.form.newBol(method='post' action='/createBol' onsubmit="return validateForm()" autocomplete="off")
+      label(for='id') Bol: #{bol.id}
+      input(name='id' type='hidden' value=bol.id)
+      input(name='type' type='hidden' value=bol.type)
       label(for='vin') Vin:
-      input(name='vin' type='text' value=(bol.vin || ''))
-      p.error.vin-error VIN must be filled out
+      input(name='vin' type='text' autocomplete="nope" value=(bol.vin || ''))
+      p.error.vin-error VIN must be filled out and exactly 17 digits
       label(for='customerName') Customer Name:
-      input(name='customerName' type='text' value=(bol.customerName || ''))
+      input(name='customerName' type='text' autocomplete="nope" value=(bol.customerName || ''))
       p.error.customerName-error CustomerName must be filled out
       label(for='driver') Driver:
-      select(name='driver')
+      select(name='driver' autocomplete="nope")
+        option(value='none' disabled selected) --
         each driver in h.drivers
           option(value=driver.name)=driver.name
-      p.error.address-error An address must be filled out
-      label(for='googleAddress' value=(bol.googleAddress || '')) Google Address:
-      input(type="text" id="googleAddress" name="googleAddress" value=`${!bol.location ? '' : bol.location.googleAddress}` autocomplete="off")
-      p.separator - or -
-      .getPosBtn Get Current Location
+      p.error.driver-error A Driver must be selected
+      button.getPosBtn(type='button') Get Current Location
       label(for="lng") Address Lng
-      input(type="text" id="lng" name="coordinates[0]" value=`${bol.coordinates ? bol.coordinates[0] : ''}`)
+      input(type="text" autocomplete="nope" id="lng" name="coordinates[0]" value=`${bol.coordinates ? bol.coordinates[0] : ''}`)
       p.error.lng-error Lng must be filled out
       label(for="lat") Address Lat
-      input(type="text" id="lat" name="coordinates[1]" value=`${bol.coordinates ? bol.coordinates[1] : ''}`)
+      input(type="text" autocomplete="nope" id="lat" name="coordinates[1]" value=`${bol.coordinates ? bol.coordinates[1] : ''}`)
       p.error.lat-error Lat must be filled out
-      label.withnote(for='address') Address 
-      label.footnote(for='address') *only needed if using current position feature.
-      input(name='address' type='text' value=(bol.address || ''))
+      label(for='city') City
+      input(name='city' type='text' autocomplete="nope")
+      p.error.city-error The city must be filled out
+      label(for='postal') Postal Code
+      input(name='postal' type='text' autocomplete="nope")
+      p.error.postal-error Code-error The postal Code must be filled out
+      label(for='state') State
+      select(name='state' autocomplete="nope")
+        option(value='none' disabled selected) --
+        each state in h.states
+          option(value=state) #{state}
+      p.error.state-error A State must be selected
       label(for='damage') Damage?
       p.error.damage-error Damage must be filled out
       label.radio-label(for='damage') Yes
@@ -37,19 +47,24 @@ block content
   script.
     const vin = document.querySelector('input[name=vin]')
     const customerName = document.querySelector('input[name=customerName]')
-    const address = document.querySelector('input[name=address]')
+    const city = document.querySelector('input[name=city]')
+    const postal = document.querySelector('input[name=postal]')
+    const driver = document.querySelector('select[name=driver]')
+    const state = document.querySelector('select[name=state]')
     const damageYes = document.querySelector('#damage-yes')
     const damageNo = document.querySelector('#damage-no')
 
     const errors = [...document.querySelectorAll('.error')]
     const errvin = document.querySelector('.vin-error')
+    const errdriver = document.querySelector('.driver-error')
     const errcustomerName = document.querySelector('.customerName-error')
     const errlng = document.querySelector('.lng-error')
     const errlat = document.querySelector('.lat-error')
-    const erraddress = document.querySelector('.address-error')
+    const errcity = document.querySelector('.city-error')
+    const errpostal = document.querySelector('.postal-error')
+    const errstate = document.querySelector('.state-error')
     const errdamage = document.querySelector('.damage-error')
 
-    const googleAddress = document.querySelector('#googleAddress')
     const lat = document.querySelector('#lat')
     const lng = document.querySelector('#lng')
     const getPosBtn = document.querySelector('.getPosBtn')
@@ -57,13 +72,47 @@ block content
     getPosBtn.addEventListener('click', getPos)
 
     function getPos() {
-      navigator.geolocation.getCurrentPosition(function(position) {
-        lat.value = position.coords.latitude
-        lng.value = position.coords.longitude
-        console.log(position.coords.latitude, position.coords.longitude);
-      });
-      googleAddress.value = ''
-      googleAddress.placeholder = 'Current Position Selected'
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(success, error);
+      } else {
+        error('not supported');
+      }
+    }
+
+    function success(position) {
+      lat.value = position.coords.latitude
+      lng.value = position.coords.longitude
+      getAddress(lat.value, lng.value)
+      //- console.log(position.coords.latitude, position.coords.longitude);
+    }
+
+    function error(msg) {
+      alert(msg.message);
+    }
+
+    function getAddress(lat, lng) {
+      var xhr = new XMLHttpRequest();
+      xhr.open('get', `/api/geocodeing/lat/${lat}/lng/${lng}`, true)
+      xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      xhr.onload = function (e) {
+        if (xhr.readyState ===4) {
+          if (xhr.status === 200) {
+            result = JSON.parse(xhr.responseText)
+            if (result.status === 200) {
+              city.value = result.city
+              state.value = result.state
+              postal.value = result.postal
+            } else {
+              console.log(result)
+            }
+          }
+        }
+      }
+      xhr.onerror = function (e) {
+        console.error(xhr.statusText);
+      }
+      xhr.send()
     }
 
     function validateForm() {
@@ -71,7 +120,7 @@ block content
       errors.forEach(err => {
         err.style.display = 'none'
       })
-      if(vin.value =='') {
+      if(vin.value == '' || vin.value.length != 17) {
         err++
         errvin.style.display = 'block'
       }
@@ -87,9 +136,21 @@ block content
         err++
         errlat.style.display = 'block'
       }
-      if(address.value == '' && googleAddress.value == '') {
+      if(city.value == '') {
         err++
-        erraddress.style.display = 'block'
+        errcity.style.display = 'block'
+      }
+      if(state.value == 'none') {
+        err++
+        errstate.style.display = 'block'
+      }
+      if(postal.value == '') {
+        err++
+        errpostal.style.display = 'block'
+      }
+      if(driver.value == 'none') {
+        err++
+        errdriver.style.display = 'block'
       }
       if(!damageNo.checked && !damageYes.checked) {
         err++
@@ -98,3 +159,4 @@ block content
       if (err) return false;
       return true;
     }
+

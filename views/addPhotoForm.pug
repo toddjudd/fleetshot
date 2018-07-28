@@ -6,12 +6,27 @@ block content
       .photos
         each photo in bol.photos
           if photo != 'custSig.png' && photo != 'driveSig.png'
-            img.details_photos-photo(src=`/bols/${bol.vin}/${photo}`)
+            img.details_photos-photo(src=`/bols/${bol.id}/${photo}`)
       .upload
-        form(method='post' enctype='multipart/form-data' action=`/uploadMultiple/${bol.vin}`)
+        form(method='post' enctype='multipart/form-data' action=`/uploadMultiple/${bol.id}`)
           label(for='file') New Photo Upload:
           input(type='file' name='file' id='file' multiple)
+          p.photoCount-error You must upload 6 or more photos
             //-  accept='image/gif, image/png, image/jpeg'
           input.submit(name='submit' type='submit' value='Upload')
-          a(href=`/addBolSig/${bol.vin}`)
-            .button Done
+          .doneButton Done
+  script.
+    var photoCount = #{bol.photoCount}
+    var id = #{bol.id}
+    var doneBtn = document.querySelector('.doneButton')
+    var photoCountError = document.querySelector('.photoCount-error')
+    doneBtn.addEventListener('click', validatePhotos)
+    function validatePhotos() {
+      photoCountError.style.display = 'none'
+      if (photoCount < 6) {
+        photoCountError.style.display = 'block'
+      } else {
+        photoCountError.style.display = 'none'
+        window.location.href = `/addBolSig/${id}`;
+      }
+    }

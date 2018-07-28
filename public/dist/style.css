@@ -443,7 +443,8 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 5rem;
   font-family: 'Roboto';
   font-weight: 600;
-  letter-spacing: -1px; }
+  letter-spacing: -1px;
+  margin: 12px 0; }
 
 a {
   text-decoration: none;
@@ -1130,6 +1131,19 @@ pre.error {
   line-height: 3;
   white-space: pre-line; }
 
+@media all and (max-width: 1200px) {
+  .card {
+    padding: 2rem; } }
+
+.details_id-label {
+  display: inline-block;
+  font-size: 1.75em; }
+
+.details_id-data {
+  display: inline-block;
+  float: right;
+  font-size: 1.6em; }
+
 .details_vin-label {
   display: inline-block;
   font-size: 1.75em; }
@@ -1198,6 +1212,10 @@ pre.error {
 .details form {
   margin-top: 5px; }
 
+.details .email-error {
+  color: #E50714;
+  display: none; }
+
 .details .submit {
   background-color: #46a5ea;
   color: #303030;
@@ -1235,7 +1253,8 @@ pre.error {
   text-align: center;
   background-color: #46a5ea;
   color: #303030;
-  padding: 10px; }
+  padding: 10px;
+  border: none; }
 
 .newBol .separator {
   text-align: center;
@@ -1274,12 +1293,16 @@ pre.error {
     max-height: 200px;
     width: auto; }
 
+.upload form .photoCount-error {
+  display: none;
+  color: #E50714; }
+
 .upload form .submit {
   background-color: #46a5ea;
   color: #303030;
   margin: 5px 0 0 0; }
 
-.upload form .button {
+.upload form .doneButton {
   font-size: 1em;
   width: 100%;
   margin: 10px 0;
@@ -1294,8 +1317,7 @@ pre.error {
   border-right: 4px solid #1A8FE3;
   border-bottom: 3px solid #1A8FE3;
   border-left: 2px solid #1A8FE3;
-  width: 500;
-  height: 175; }
+  margin: auto; }
 
 .signature .customer-signature-name {
   font-size: 1.5em; }
@@ -1351,5 +1373,23 @@ pre.error {
 
 .signature .wait {
   color: #1A8FE3; }
+
+@media all and (max-width: 600px) {
+  .signature canvas {
+    border-top: 2px solid #1A8FE3;
+    border-right: 4px solid #1A8FE3;
+    border-bottom: 3px solid #1A8FE3;
+    border-left: 2px solid #1A8FE3;
+    width: 250;
+    height: 175; } }
+
+@media all and (max-width: 380px) {
+  .signature canvas {
+    border-top: 2px solid #1A8FE3;
+    border-right: 4px solid #1A8FE3;
+    border-bottom: 3px solid #1A8FE3;
+    border-left: 2px solid #1A8FE3;
+    width: 220;
+    height: 175; } }
 
 /*# sourceMappingURL=style.css.map*/

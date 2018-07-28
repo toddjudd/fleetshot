@@ -4,8 +4,7 @@
     border-right: 4px solid $blue;
     border-bottom: 3px solid $blue;
     border-left: 2px solid $blue;
-    width: 500;
-    height: 175;
+    margin: auto;
   }
   .customer-signature-name {
     font-size: 1.5em;
@@ -67,5 +66,31 @@
   }
   .wait {
     color: $blue;
+  }
+}
+
+@media all and (max-width: 600px) {
+  .signature {
+    canvas {
+      border-top: 2px solid $blue;
+      border-right: 4px solid $blue;
+      border-bottom: 3px solid $blue;
+      border-left: 2px solid $blue;
+      width: 250;
+      height: 175;
+    }
+  }
+}
+
+@media all and (max-width: 380px) {
+  .signature {
+    canvas {
+      border-top: 2px solid $blue;
+      border-right: 4px solid $blue;
+      border-bottom: 3px solid $blue;
+      border-left: 2px solid $blue;
+      width: 220;
+      height: 175;
+    }
   }
 }

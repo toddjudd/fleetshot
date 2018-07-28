@@ -30,3 +30,9 @@ pre.error {
   line-height: 3;
   white-space: pre-line;
 }
+
+@media all and (max-width: 1200px) {
+  .card {
+    padding: 2rem;
+  }
+}

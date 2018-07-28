@@ -14,24 +14,27 @@ block content
             th Time
             th Location
             th VIN
+            th Type
+            th Status
             th Driver
             th Damage
             th Customer Email
+            //- if user.admin
+            //-   th Delete?
         tbody
           each bol in bols
               tr.clickable
                 td=moment(bol.confirmedDate).format("DD MMM YYYY")
                 td=moment(bol.confirmedDate).format("hh:mm a")
-                td #{bol.location.googleAddress || bol.location.address}
+                td #{bol.location.city}, #{bol.location.state} #{bol.location.postal}
                 td.ct
-                  a.row-link(href=`/bol/${bol.vin}`)=bol.vin
-                td=bol.Driver
-                td #{bol.damage ? 'Yes' : 'No'}
+                  a.row-link(href=`/bol/${bol.id}`)=bol.vin
+                td=bol.type
+                td=bol.status
+                td=bol.driver
+                td=bol.damage ? 'Yes' : 'No'
                 td #{bol.customerName} &lt#{bol.customerEmail}&gt
+                //- if user.admin
+                //-   td.ct
+                //-     a.row-link(href=`/delete/bol/${bol.id}`) Delete
   script.
-    //- rowLinks = [...document.querySelectorAll('.row-link')]
-    //- rowLinks.forEach(link => {
-    //-   link.parentElement.parentElement.addEventListener('click', function(e) {
-    //-     e.target.parentElement.querySelector('.row-link').click()
-    //-   })
-    //- })
