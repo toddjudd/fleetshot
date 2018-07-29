@@ -23,11 +23,11 @@ router.post('/register',
 //bol
 router.get('/newPickUp', 
   bolController.setTypePickup,
-  bolController.newBol
+  catchErrors(bolController.newBol)
 )
 router.get('/newDelivery', 
   bolController.setTypeDelivery,
-  bolController.newBol
+  catchErrors(bolController.newBol)
 )
 router.post('/createBol', 
   bolController.createBolDir,
@@ -57,7 +57,7 @@ router.post('/confirmBol/:id',
 //search BOLs
 router.get('/searchBol', bolController.getBols)
 router.post('/searchBol', bolController.findBols)
-router.get('/bol/:id', bolController.getBol)
+router.get('/bol/:id', catchErrors(bolController.getBol))
 //Delete BOLs
 router.get('/delete/bol/:id', bolController.deleteBolById)
 //GeoCoding Api

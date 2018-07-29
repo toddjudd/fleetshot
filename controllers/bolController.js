@@ -144,16 +144,17 @@ exports.sendCustomerPDF = async (req, res) => {
 exports.findBols = async (req, res) => {
   regex = new RegExp(req.body.vin, 'gi')
   bols = await Bol.find({vin: regex, status: {$nin: ['Deleted']}})
-  res.render('Bols', {title: 'Search for BOL', bols})
+  res.render('bols', {title: 'Search for BOL', bols})
 }
 
 exports.getBols = async (req, res) => {
   bols = await Bol.find({status: {$nin: ['Deleted']}})
-  res.render('Bols', {title: 'Search for BOL', bols})
+  res.render('bols', {title: 'Search for BOL', bols})
 }
 
 exports.getBol = async (req, res) => {
-  bol = await Bol.findOne({ id: req.params.id }, {status:'Deleted'}) 
+  bol = await Bol.findOne({ id: req.params.id , status: {$nin: ['Deleted']}})
+  console.log(bol.path) 
   bol.photos = await showDir(bol.path)
   res.render('bol', {title: `BOL Record`, bol})
 }
