@@ -5,6 +5,19 @@ const htmlToText = require('html-to-text')
 const promisify = require('es6-promisify')
 const moment = require('moment')
 const h = require('./../helpers')
+// Require:
+var postmark = require("postmark");
+
+// // Send an email:
+// var client = new postmark.Client("717984bf-8821-4f9f-9317-e06d1c8e3830");
+
+
+// client.sendEmail({
+//   "From": "no-reply@fleetshot.com",
+//   "To": "cody@enlinx.com",
+//   "Subject": "Test",
+//   "TextBody": "Hello from Postmark!"
+// });
 
 const transport = nodemailer.createTransport({
   host: process.env.MAIL_HOST,
@@ -25,9 +38,9 @@ exports.sendPDF = async (options) => {
   const html = generateHTML(options.filename, options)
   const text = htmlToText.fromString(html)
   const mailOptions = {
-    from: 'Todd Judd <todd.judd@gmail.com>',
+    from: process.env.MAIL_SENDER,
     to: options.customerEmail,
-    cc: 'Todd Judd <toddjudd@gmail.com>',
+    cc: process.env.MAIL_CC,
     subject: options.subject,
     html,
     text
