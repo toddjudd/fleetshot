@@ -1,3 +1,5 @@
 node_modules
 bols/
 variables.env
+certs/
+bin/
