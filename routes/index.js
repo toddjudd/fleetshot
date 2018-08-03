@@ -31,7 +31,7 @@ router.get('/newDelivery',
 )
 router.post('/createBol', 
   bolController.createBolDir,
-  catchErrors(bolController.checkVin),
+  // catchErrors(bolController.checkVin),
   catchErrors(bolController.createBol)
 )
 //bol photos

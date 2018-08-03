@@ -61,16 +61,16 @@ exports.editBol = (req, res) => {
   res.render('newBol', {title: 'Create New BOL', bol: req.body})
 }
 
-exports.checkVin = async (req, res, next) => {
-  const vin = await Bol.findOne({vin: req.body.vin})
-  if (vin){
-    req.flash('error', 'Vin has already been used')
-    res.render('newbol', {title: 'Create New BOL', bol: req.body || {}, flashes: req.flash()})
-    return
-  } else {
-    return next();
-  }
-}
+// exports.checkVin = async (req, res, next) => {
+//   const vin = await Bol.findOne({vin: req.body.vin})
+//   if (vin){
+//     req.flash('error', 'Vin has already been used')
+//     res.render('newbol', {title: 'Create New BOL', bol: req.body || {}, flashes: req.flash()})
+//     return
+//   } else {
+//     return next();
+//   }
+// }
 
 exports.addBolPhotos = async (req, res) => {
   const bol = await Bol.findOne({ id: req.params.id })
