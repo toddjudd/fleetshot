@@ -30,14 +30,18 @@ block content
     td.label(colspan='2') Photos:
   tr
     td.photos(colspan='2')
-      each photo in bol.photos
-        if photo != 'custSig.png' && photo != 'driveSig.png'
-          img.photo(src=`http://${process.env.DOMAIN}/bols/${bol.id}/${photo}`)
+      each photo in attachments
+        if photo.filename != 'custSig.png' && photo != 'driveSig.png'
+          img.photo(src=`cid:${photo.cid}`)
   tr
     td.signature
-      img.sigImg(src=`https://${process.env.DOMAIN}/bols/${bol.id}/driveSig.png`)
-    td.signature      
-      img.sigImg(src=`https://${process.env.DOMAIN}/bols/${bol.id}/custSig.png`)
+      each photo in attachments
+        if photo.filename == 'driveSig.png'
+          img.sigImg(src=`cid:${photo.cid}`)
+    td.signature
+      each photo in attachments
+        if photo.filename == 'custSig.png'
+          img.sigImg(src=`cid:${photo.cid}`)
   tr
     td
       p #{bol.driver}

@@ -34,30 +34,29 @@ const generateHTML = (filename, options = {}) => {
   return inlined
 }
 
-const generateAttachment = (photos = []) => {
-  console.log(photo)
-  const attachemnts = photos.map(photo => {
+const generateAttachment = (photos = [], bolId) => {
+  const attachments = photos.map(photo => {
     json = {
-      filename: photo.photo
-      path: __dirname+'/public/bols/'+ photo.photo
-      cid: photo.photo..split('.')[0]+'@fleetshot.com'
+      filename: photo,
+      path: '/var/www/fleetshot/public/bols/'+ bolId+'/'+photo,
+      cid: photo.split('.')[0]+'@fleetshot.com'
     }
     return json;
   })
-  return attachemnts
+  return attachments
 }
 
 exports.sendPDF = async (options) => {
+  options.attachments = generateAttachment(options.photos, options.bol.id)
   const html = generateHTML(options.filename, options)
   const text = htmlToText.fromString(html)
-  const attachemnts = generateAttachment(options.photos)
   const mailOptions = {
     from: process.env.MAIL_SENDER,
     to: options.customerEmail,
     cc: process.env.MAIL_CC,
     subject: options.subject,
     html,
-    attachments,
+    attachments: options.attachments,
     text
   };
   const sendMail = promisify(transport.sendMail, transport)
