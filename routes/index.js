@@ -42,8 +42,8 @@ router.get('/addBolPhotos/:id', bolController.addBolPhotos)
 //   uploadController.resize
 // )
 router.post('/uploadMultiple/:id',
-  bolController.getBolById,
   uploadController.uploadMultiple,
+  bolController.getBolById,
   uploadController.resizeMultiple
 )
 //bol signatures

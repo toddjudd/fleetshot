@@ -21,7 +21,7 @@ exports.setTypePickup = (req, res, next) => {
 
 exports.getBolById = async (req, res, next) => {
   req.bol = await Bol.findOne({ id: req.params.id , status: {$nin: ['Deleted']}})
-  req.bol.photos = await showDir(bol.path)
+  req.bol.photos = await showDir(req.bol.path)
   return next();
 }
 

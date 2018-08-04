@@ -32,14 +32,18 @@ exports.uploadMultiple = (req, res, next) => {
   })
 }
 
-exports.resizeMultiple = (req, req) => {
+exports.resizeMultiple = (req, res) => {
+  console.log(req.bol)
+  console.log(req.bol.photos)
   req.bol.photos.forEach(photo => {
-    jimp.read(photo, function(err, img) {
+    console.log(process.cwd())
+    jimp.read(req.bol.path+'/'+photo, function(err, img) {
+      console.log(img)
       if (err) {
         console.log(err)
       } else {
         img.resize(800, jimp.AUTO); 
-        img.write(photo)
+        img.write(req.bol.path+'/'+photo)
       }
     })
   })
