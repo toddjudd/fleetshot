@@ -22,10 +22,7 @@ const multiUpload = multer({ storage : storage }).array('file');
 
 exports.uploadMultiple = (req, res) => {
   multiUpload(req, res, function(err) {
-    console.log(req.body)
-    console.log(req.files)
     if (err) {
-      console.log(err)
       req.flash('error', 'Error Uploading Files')
       res.redirect('back')
       return
@@ -42,7 +39,6 @@ exports.displaySingleFileInputTestForm = (req, res) => {
 exports.upload = multer(multerOptions).single('file')
 
 exports.write = (req, res, next) => {
-  console.log('write')
   if (req.file.mimetype.startsWith('image')) {
     return next();
   }
@@ -50,16 +46,13 @@ exports.write = (req, res, next) => {
   const file = `${uuid.v4()}.${extension}`
   fs.writeFile(process.env.BOLDIR+'/'+req.params.id+'/'+file, req.file.buffer, function(err) {
     if (err) {
-      return console.log(err);
     }
-    console.log('file saved')
     res.redirect(`/job/${req.params.slug}`)
     return;
   })
 }
 
 exports.resize = async (req, res) => {
-  console.log('resize')
   if (!req.file) {
     req.flash('error', 'No File Uploaded')
     res.redirect(`/job/${req.params.slug}`)
@@ -74,7 +67,6 @@ exports.resize = async (req, res) => {
 }
 
 exports.postSingleFileInputTest = (req, res) => {
-  console.log(req.file)
   res.json(req.file)
 }
 
@@ -90,7 +82,6 @@ exports.postSingleFileInputTest = (req, res) => {
 // }
 
 // exports.postMultiFileInputTest = (req, res) => {
-//   console.log(req.files)
 //   res.json(req.files)
 // }
 

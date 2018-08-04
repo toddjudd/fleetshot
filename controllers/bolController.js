@@ -20,6 +20,10 @@ exports.setTypePickup = (req, res, next) => {
 }
 
 exports.newBol = async (req, res) => {
+  res.render('newbol', {title: 'Create New BOL', bol: req.body || {}})
+}
+
+exports.getBolId = (req, res) => {
   lastBol = await Bol.aggregate([
     {$group: {
       _id: null,
@@ -31,14 +35,12 @@ exports.newBol = async (req, res) => {
   } else {
     req.body.id = lastBol[0].id+1
   }
-  res.render('newbol', {title: 'Create New BOL', bol: req.body || {}})
 }
 
 exports.createBolDir = (req, res, next) => {
   req.body.path = process.env.BOLDIR + `/${req.body.id}`
   if (!fs.existsSync(req.body.path)) {
     fs.mkdirSync(req.body.path);
-    console.log('creating New Directory');
   }
   return next();
 }
@@ -60,17 +62,6 @@ exports.createBol = async (req, res, next) => {
 exports.editBol = (req, res) => {
   res.render('newBol', {title: 'Create New BOL', bol: req.body})
 }
-
-// exports.checkVin = async (req, res, next) => {
-//   const vin = await Bol.findOne({vin: req.body.vin})
-//   if (vin){
-//     req.flash('error', 'Vin has already been used')
-//     res.render('newbol', {title: 'Create New BOL', bol: req.body || {}, flashes: req.flash()})
-//     return
-//   } else {
-//     return next();
-//   }
-// }
 
 exports.addBolPhotos = async (req, res) => {
   const bol = await Bol.findOne({ id: req.params.id })
@@ -155,7 +146,6 @@ exports.getBols = async (req, res) => {
 
 exports.getBol = async (req, res) => {
   bol = await Bol.findOne({ id: req.params.id , status: {$nin: ['Deleted']}})
-  console.log(bol.path) 
   bol.photos = await showDir(bol.path)
   res.render('bol', {title: `BOL Record`, bol})
 }

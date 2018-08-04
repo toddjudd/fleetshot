@@ -30,8 +30,8 @@ router.get('/newDelivery',
   catchErrors(bolController.newBol)
 )
 router.post('/createBol', 
+  bolController.getBolId
   bolController.createBolDir,
-  // catchErrors(bolController.checkVin),
   catchErrors(bolController.createBol)
 )
 //bol photos

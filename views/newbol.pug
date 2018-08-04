@@ -3,8 +3,6 @@ extends layout
 block content
   .inner
     form.form.newBol(method='post' action='/createBol' onsubmit="return validateForm()" autocomplete="off")
-      label(for='id') Bol: #{bol.id}
-      input(name='id' type='hidden' value=bol.id)
       input(name='type' type='hidden' value=bol.type)
       label(for='vin') Vin:
       input(name='vin' type='text' autocomplete="nope" value=(bol.vin || ''))
