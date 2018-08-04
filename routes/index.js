@@ -30,7 +30,7 @@ router.get('/newDelivery',
   catchErrors(bolController.newBol)
 )
 router.post('/createBol', 
-  bolController.getBolId
+  bolController.getBolId,
   bolController.createBolDir,
   catchErrors(bolController.createBol)
 )

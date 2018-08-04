@@ -23,7 +23,7 @@ exports.newBol = async (req, res) => {
   res.render('newbol', {title: 'Create New BOL', bol: req.body || {}})
 }
 
-exports.getBolId = (req, res) => {
+exports.getBolId = async (req, res, next) => {
   lastBol = await Bol.aggregate([
     {$group: {
       _id: null,
@@ -35,6 +35,7 @@ exports.getBolId = (req, res) => {
   } else {
     req.body.id = lastBol[0].id+1
   }
+  return next();
 }
 
 exports.createBolDir = (req, res, next) => {
