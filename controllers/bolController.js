@@ -133,6 +133,7 @@ exports.sendCustomerPDF = async (req, res) => {
     customerEmail: req.bol.customerEmail, 
     subject: `BOL: ${req.bol.id} VIN: ${req.bol.vin}`, 
     filename: 'bol-pdf',
+    photos: req.bol.photos,
     bol: req.bol,
     h,
     moment
