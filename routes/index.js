@@ -36,13 +36,15 @@ router.post('/createBol',
 )
 //bol photos
 router.get('/addBolPhotos/:id', bolController.addBolPhotos)
-router.post('/uploadphoto/:id', 
-  uploadController.upload,
-  uploadController.write,
-  uploadController.resize
-)
+// router.post('/uploadphoto/:id', 
+//   uploadController.upload,
+//   uploadController.write,
+//   uploadController.resize
+// )
 router.post('/uploadMultiple/:id',
-  uploadController.uploadMultiple
+  bolController.getBolById,
+  uploadController.uploadMultiple,
+  uploadController.resizeMultiple
 )
 //bol signatures
 router.get('/addBolSig/:id', bolController.addBolSignatures)

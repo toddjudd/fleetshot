@@ -19,6 +19,12 @@ exports.setTypePickup = (req, res, next) => {
   return next();
 }
 
+exports.getBolById = async (req, res, next) => {
+  req.bol = await Bol.findOne({ id: req.params.id , status: {$nin: ['Deleted']}})
+  req.bol.photos = await showDir(bol.path)
+  return next();
+}
+
 exports.newBol = async (req, res) => {
   res.render('newbol', {title: 'Create New BOL', bol: req.body || {}})
 }

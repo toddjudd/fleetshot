@@ -20,7 +20,7 @@ const storage = multer.diskStorage({
 })
 const multiUpload = multer({ storage : storage }).array('file');
 
-exports.uploadMultiple = (req, res) => {
+exports.uploadMultiple = (req, res, next) => {
   multiUpload(req, res, function(err) {
     if (err) {
       req.flash('error', 'Error Uploading Files')
@@ -28,8 +28,22 @@ exports.uploadMultiple = (req, res) => {
       return
     } 
     req.flash('success', 'Files Uploaded')
-    res.redirect('back')
+    return next();
   })
+}
+
+exports.resizeMultiple = (req, req) => {
+  req.bol.photos.forEach(photo => {
+    jimp.read(photo, function(err, img) {
+      if (err) {
+        console.log(err)
+      } else {
+        img.resize(800, jimp.AUTO); 
+        img.write(photo)
+      }
+    })
+  })
+  res.redirect('back')
 }
 
 exports.displaySingleFileInputTestForm = (req, res) => {
@@ -69,21 +83,3 @@ exports.resize = async (req, res) => {
 exports.postSingleFileInputTest = (req, res) => {
   res.json(req.file)
 }
-
-//DOES NOT WORK - Limitations due to filesize and jimp blocking in a for each loop
-// exports.displayMultiFileInputTestForm = (req, res) => {
-//   res.render('multifileinput')
-// }
-
-// exports.uploadMultiple = multer(multerOptions).array('files')
-
-// exports.resizeMultiple = async (req, res, next) => {
-
-// }
-
-// exports.postMultiFileInputTest = (req, res) => {
-//   res.json(req.files)
-// }
-
-
-
