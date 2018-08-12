@@ -4,7 +4,7 @@ block content
   .inner
     form.form.newBol(method='post' action='/createBol' onsubmit="return validateForm()" autocomplete="off")
       input(name='type' type='hidden' value=bol.type)
-      label(for='vin') Vin:
+      label(for='vin') Vin - Last 8 Digits:
       input(name='vin' type='text' autocomplete="nope" value=(bol.vin || ''))
       p.error.vin-error VIN must be filled out and exactly 17 digits
       label(for='customerName') Customer Name:
