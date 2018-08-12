@@ -17,6 +17,10 @@ options = {
   key: fs.readFileSync(path.join(certsPath, 'fleetshot.key.pem'))
   // This certificate should be a bundle containing your server certificate and any intermediates
   // cat certs/cert.pem certs/chain.pem > certs/server-bundle.pem
+, ca: [
+    fs.readFileSync(path.join(caCertsPath, 'intermediate.crt.pem'))
+    ,fs.readFileSync(path.join(caCertsPath, 'root.crt.pem'))
+  ]
 , cert: fs.readFileSync(path.join(certsPath, 'fleetshot.crt.pem'))
   // ca only needs to be specified for peer-certificates
 //, ca: [ fs.readFileSync(path.join(caCertsPath, 'my-root-ca.crt.pem')) ]
