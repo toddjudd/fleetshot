@@ -11,10 +11,7 @@ block content
       input(name='customerName' type='text' autocomplete="nope" value=(bol.customerName || ''))
       p.error.customerName-error CustomerName must be filled out
       label(for='driver') Driver:
-      select(name='driver' autocomplete="nope")
-        option(value='none' disabled selected) --
-        each driver in h.drivers
-          option(value=driver.name)=driver.name
+      input(name='driver' autocomplete="nope" type='text' value=(bol.driver || ''))
       p.error.driver-error A Driver must be selected
       button.getPosBtn(type='button') Get Current Location
       label(for="lng") Address Lng
@@ -47,7 +44,7 @@ block content
     const customerName = document.querySelector('input[name=customerName]')
     const city = document.querySelector('input[name=city]')
     const postal = document.querySelector('input[name=postal]')
-    const driver = document.querySelector('select[name=driver]')
+    const driver = document.querySelector('input[name=driver]')
     const state = document.querySelector('select[name=state]')
     const damageYes = document.querySelector('#damage-yes')
     const damageNo = document.querySelector('#damage-no')
@@ -146,7 +143,7 @@ block content
         err++
         errpostal.style.display = 'block'
       }
-      if(driver.value == 'none') {
+      if(driver.value == '') {
         err++
         errdriver.style.display = 'block'
       }

@@ -28,11 +28,6 @@ exports.menu = [
   { slug: '/map', title: 'Map', icon: 'map', },
 ];
 
-exports.drivers = [
-  { name: 'Todd Judd' },
-]
-
-
 exports.states = [
   'AL',
   'AK',
