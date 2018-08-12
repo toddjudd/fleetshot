@@ -67,7 +67,7 @@ const BolSchema = new mongoose.Schema({
 
 // This should validat that the vin is not already in the system. 
 BolSchema.path('vin').validate(function(value, done) {
-  return value.length === 17
-}, 'Error 0002: Vin Must be 17 digits exactly. Check for white spaces, and character count, and try again.');
+  return value.length === 8
+}, 'Error 0002: Vin Must be 8 digits exactly. Check for white spaces, and character count, and try again.');
 
 module.exports = mongoose.model('Bol', BolSchema);
