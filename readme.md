@@ -12,7 +12,7 @@ Error 0000: Id Must be present, attempt restarting BOL Creation
 
 Error 0001: Vin number must be present
 
-Error 0002: Vin Must be 17 digits exactly. Check for white spaces, and character count, and try again
+Error 0002: Vin Must be 8 digits exactly. Check for white spaces, and character count, and try again
 
 Error 0003: You must supply coordinates
 

@@ -19,8 +19,8 @@ block content
             th Driver
             th Damage
             th Customer Email
-            //- if user.admin
-            //-   th Delete?
+            if user.admin
+              th Delete?
         tbody
           each bol in bols
               tr.clickable
@@ -34,7 +34,7 @@ block content
                 td=bol.driver
                 td=bol.damage ? 'Yes' : 'No'
                 td #{bol.customerName} &lt#{bol.customerEmail}&gt
-                //- if user.admin
-                //-   td.ct
-                //-     a.row-link(href=`/delete/bol/${bol.id}`) Delete
+                if user.admin
+                  td.ct
+                    a.row-link(href=`/delete/bol/${bol.id}`) Delete
   script.

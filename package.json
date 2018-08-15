@@ -1,13 +1,13 @@
 {
-  "name": "dang-thats-delicious",
-  "version": "0.0.0",
+  "name": "fleetshot",
+  "version": "0.1.0",
   "private": true,
   "engines": {
     "node": "7.10.1"
   },
   "scripts": {
     "start": "node ./start.js",
-    "watch": "nodemon ./start.js --ignore public/",
+    "watch": "nodemon ./dev.js --ignore public/",
     "dev": "concurrently \"npm view node version\" \"npm run watch\" \"npm run assets\" --names \"💻,📦\" --prefix name",
     "assets": "webpack -w --display-max-modules 0",
     "sample": "node ./data/load-sample-data.js",
