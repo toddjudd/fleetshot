@@ -12,8 +12,11 @@ block content
           .details_vin-label VIN:
           .details_vin-data=bol.vin
         .details_created
-          .details_created-label Created:
-          .details_created-data #{moment(bol.created).format('HH:MM')} #{moment(bol.created).format('MM-DD-YYYY')}
+          .details_created-label Time:
+          .details_created-data #{moment(bol.created).format('h:mm a')} 
+        .details_created
+          .details_created-label Date:
+          .details_created-data #{moment(bol.created).format('MM-DD-YYYY')}
         .details_damage
           .details_damage-label Damage:
           .details_damage-data=(bol.damage? 'Yes' : 'No')

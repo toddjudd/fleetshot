@@ -3,22 +3,24 @@ extends layout
 block content
   .inner.signature
     .card
-      h1 Customer Signature
+      .sigtitle Customer Signature
       .customer-signature-name=bol.customerName
       canvas(id="customer-signature-pad" class="signature-pad")
       .customer-signature-pad-controls
+        span
         button(id='customer-done') Done
         button.clear(id='customer-clear') Clear
-      h1 Driver Signature
+      .sigtitle Driver Signature
       .driver-signature-name=bol.driver
       canvas(id="driver-signature-pad" class="signature-pad")
       .driver-signature-pad-controls
+        button(id='save') Save
+        span
         button(id='driver-done') Done
         button.clear(id='driver-clear') Clear
       .signature-pad-error
 
-      .signature-pad-controls
-        button(id='save') Save
+      //- .signature-pad-controls
   script(src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js")
   script.
     var vin="#{bol.vin}"

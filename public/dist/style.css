@@ -1235,7 +1235,7 @@ pre.error {
     width: 100%; }
   .welcome-menu .link {
     width: 95%;
-    margin: auto;
+    margin: 8px auto;
     text-align: center;
     background-color: #46a5ea;
     color: #303030;
@@ -1255,6 +1255,18 @@ pre.error {
   color: #303030;
   padding: 10px;
   border: none; }
+
+.newBol .gettingPos {
+  color: #1A8FE3;
+  font-size: 1.5em;
+  margin: 8px auto;
+  text-align: center; }
+
+.newBol .gotPos {
+  color: #ADC417;
+  font-size: 1.5em;
+  margin: 8px auto;
+  text-align: center; }
 
 .newBol .separator {
   text-align: center;
@@ -1284,6 +1296,19 @@ pre.error {
   margin: 0;
   padding: 0; }
 
+.newBol .pulsate {
+  animation: pulsate 3s ease-out;
+  animation-iteration-count: infinite;
+  opacity: 0.5; }
+
+@keyframes pulsate {
+  0% {
+    opacity: 0.3; }
+  50% {
+    opacity: 1.0; }
+  100% {
+    opacity: 0.3; } }
+
 .photos {
   display: -ms-flexbox;
   display: flex;
@@ -1312,6 +1337,10 @@ pre.error {
   padding: 10px;
   font-weight: normal; }
 
+.signature .sigtitle {
+  font-size: 1.5em;
+  font-weight: bold; }
+
 .signature canvas {
   border-top: 2px solid #1A8FE3;
   border-right: 4px solid #1A8FE3;
@@ -1320,44 +1349,55 @@ pre.error {
   margin: auto; }
 
 .signature .customer-signature-name {
-  font-size: 1.5em; }
+  font-size: 1.5em;
+  text-align: right; }
 
-.signature .customer-signature-pad-controls button {
-  background-color: #46a5ea;
-  color: #303030;
-  margin: 5px;
-  padding: 10px 20px;
-  border: none;
-  font-size: 1.2em; }
-
-.signature .customer-signature-pad-controls .done {
-  background-color: #6610F2;
-  color: #1A8FE3;
-  font-weight: bold; }
-
-.signature .customer-signature-pad-controls .clear {
-  background-color: #E6C229;
-  color: #1A8FE3; }
+.signature .customer-signature-pad-controls {
+  display: -ms-flexbox;
+  display: flex; }
+  .signature .customer-signature-pad-controls span {
+    -ms-flex: 1;
+        flex: 1; }
+  .signature .customer-signature-pad-controls button {
+    background-color: #46a5ea;
+    color: #303030;
+    margin: 5px;
+    padding: 8px 18px;
+    border: none;
+    font-size: 1.2em; }
+  .signature .customer-signature-pad-controls .done {
+    background-color: #6610F2;
+    color: #1A8FE3;
+    font-weight: bold; }
+  .signature .customer-signature-pad-controls .clear {
+    background-color: #E6C229;
+    color: #1A8FE3; }
 
 .signature .driver-signature-name {
-  font-size: 1.5em; }
+  font-size: 1.5em;
+  text-align: right;
+  clear: both; }
 
-.signature .driver-signature-pad-controls button {
-  background-color: #46a5ea;
-  color: #303030;
-  margin: 5px;
-  padding: 10px 20px;
-  border: none;
-  font-size: 1.2em; }
-
-.signature .driver-signature-pad-controls .done {
-  background-color: #6610F2;
-  color: #1A8FE3;
-  font-weight: bold; }
-
-.signature .driver-signature-pad-controls .clear {
-  background-color: #E6C229;
-  color: #1A8FE3; }
+.signature .driver-signature-pad-controls {
+  display: -ms-flexbox;
+  display: flex; }
+  .signature .driver-signature-pad-controls span {
+    -ms-flex: 1;
+        flex: 1; }
+  .signature .driver-signature-pad-controls button {
+    background-color: #46a5ea;
+    color: #303030;
+    margin: 5px;
+    padding: 8px 18px;
+    border: none;
+    font-size: 1.2em; }
+  .signature .driver-signature-pad-controls .done {
+    background-color: #6610F2;
+    color: #1A8FE3;
+    font-weight: bold; }
+  .signature .driver-signature-pad-controls .clear {
+    background-color: #E6C229;
+    color: #1A8FE3; }
 
 .signature .signature-pad-controls button {
   background-color: #46a5ea;

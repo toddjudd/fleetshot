@@ -32,19 +32,20 @@ block content
             img.details_signatures-driver-photo(src=bol.driveSigPath.replace('./public',''))
             .details_signatures-driver-name Driver: #{bol.driver}
             .details_signatures-date Date: #{moment(bol.signedDate).calendar()}
-        form(method='post' onsubmit='return validateEmail()' aciton=`/confirmBol/${bol.id}`)
+        form(method='post' aciton=`/confirmBol/${bol.id}`)
           input(name='customerEmail' type='email' placeholder='somebody@email.com')
           p.email-error.error A valid email must be supplied
           input.submit(name='submit' type='submit' value='Confirm' )
   script.
-    const email = document.querySelector('input[name="customerEmail"]')
-    const emailerror = document.querySelector('.email-error')
-    var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-    function validateEmail() {
-      emailerror.style.display = 'none'
-      if (!filter.test(email.value)) {
-        emailerror.style.display = 'block'
-        email.focus;
-        return false
-      }
-    }
+    //-onsubmit='return validateEmail()'
+    //- const email = document.querySelector('input[name="customerEmail"]')
+    //- const emailerror = document.querySelector('.email-error')
+    //- var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    //- function validateEmail() {
+    //-   emailerror.style.display = 'none'
+    //-   if (!filter.test(email.value)) {
+    //-     emailerror.style.display = 'block'
+    //-     email.focus;
+    //-     return false
+    //-   }
+    //- }

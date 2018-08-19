@@ -47,10 +47,10 @@ const BolSchema = new mongoose.Schema({
     type: String,
     required: 'Error 0007: You must provide a Driver'
   },
-  damage:{
-   type: Boolean,
-   required: 'Error 0008: Damage needs to be recorded.'
-  },
+  // damage:{
+  //  type: Boolean,
+  //  required: 'Error 0008: Damage needs to be recorded.'
+  // },
   path: String,
   driveSigPath: String,
   driveSigURI: String,

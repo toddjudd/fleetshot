@@ -38,7 +38,7 @@ const generateAttachment = (photos = [], bolId) => {
   const attachments = photos.map(photo => {
     json = {
       filename: photo,
-      path: '/var/www/fleetshot/public/bols/'+ bolId+'/'+photo,
+      path: process.env.PHOTO_DIR+bolId+'/'+photo,
       cid: photo.split('.')[0]+'@fleetshot.com'
     }
     return json;
@@ -47,6 +47,9 @@ const generateAttachment = (photos = [], bolId) => {
 }
 
 exports.sendPDF = async (options) => {
+  if (options.customerEmail == '') {
+    options.customerEmail = 'bol@fleetshot.com'
+  }
   options.attachments = generateAttachment(options.photos, options.bol.id)
   const html = generateHTML(options.filename, options)
   const text = htmlToText.fromString(html)
@@ -54,6 +57,7 @@ exports.sendPDF = async (options) => {
     from: process.env.MAIL_SENDER,
     to: options.customerEmail,
     cc: process.env.MAIL_CC,
+    bcc: process.env.MAIL_BCC,
     subject: options.subject,
     html,
     attachments: options.attachments,

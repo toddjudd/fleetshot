@@ -1,4 +1,8 @@
 .signature {
+  .sigtitle {
+    font-size: 1.5em;
+    font-weight: bold;
+  }
   canvas {
     border-top: 2px solid $blue;
     border-right: 4px solid $blue;
@@ -8,13 +12,19 @@
   }
   .customer-signature-name {
     font-size: 1.5em;
+    text-align: right;
   }
   .customer-signature-pad-controls {
+    display: flex;
+    span {
+      flex:1;
+    }
     button {
+      // float: right;
       background-color: lighten($blue, 10%);
       color: $black;
       margin: 5px;
-      padding: 10px 20px;
+      padding: 8px 18px;
       border: none;
       font-size: 1.2em;
     }
@@ -30,13 +40,19 @@
   }
   .driver-signature-name {
     font-size: 1.5em;    
+    text-align: right;
+    clear: both;
   }
   .driver-signature-pad-controls {
+    display: flex;
+    span {
+      flex:1;
+    }
     button {
       background-color: lighten($blue, 10%);
       color: $black;
       margin: 5px;
-      padding: 10px 20px;
+      padding: 8px 18px;
       border: none;
       font-size: 1.2em;
     }

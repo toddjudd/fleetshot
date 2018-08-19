@@ -3,17 +3,13 @@ extends layout
 block content
   .inner 
     .card
-      h1 Welcome
       ul.welcome-menu
+        a(href='/newPickUp')  
+          li.link Begin New Pick Up
+        a(href='/newDelivery')  
+          li.link Beign New Delivery
         li.form
           form(method='post' action='/searchBol')
-            label.label(for='vin') Find Existing BOL
-            input(name='vin' type='text' placeholder='VIN')
+            //- label.label(for='vin') Find Existing BOL
+            input(name='vin' type='text' placeholder='Search BOL by Last 8 of VIN')
             input.submit(name='submit' type='submit' value='Search')
-        li.separator - Or -
-        //- li.link-label Start New Pick Up Record
-        a(href='/newPickUp')  
-          li.link New Pick Up
-        //- li.link-label Start New Delivery Record
-        a(href='/newDelivery')  
-          li.link New Delivery

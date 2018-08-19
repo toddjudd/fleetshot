@@ -6,27 +6,27 @@ var port = process.argv[2] || 4747;
 var insecurePort = process.argv[3] || 4040;
 var fs = require('fs');
 var checkip = require('check-ip-address');
-var server;
+// var server;
 var insecureServer;
 var options;
 var certsPath = path.join(__dirname, 'certs', 'server');
 var caCertsPath = path.join(__dirname, 'certs', 'ca');
  
 //ssl cert
-options = {
-  key: fs.readFileSync(path.join(certsPath, 'fleetshot.key.pem'))
-  // This certificate should be a bundle containing your server certificate and any intermediates
-  // cat certs/cert.pem certs/chain.pem > certs/server-bundle.pem
-, ca: [
-    fs.readFileSync(path.join(caCertsPath, 'intermediate.crt.pem'))
-    ,fs.readFileSync(path.join(caCertsPath, 'root.crt.pem'))
-  ]
-, cert: fs.readFileSync(path.join(certsPath, 'fleetshot.crt.pem'))
-  // ca only needs to be specified for peer-certificates
-//, ca: [ fs.readFileSync(path.join(caCertsPath, 'my-root-ca.crt.pem')) ]
-, requestCert: false
-, rejectUnauthorized: true
-};
+// options = {
+//   key: fs.readFileSync(path.join(certsPath, 'fleetshot.key.pem'))
+//   // This certificate should be a bundle containing your server certificate and any intermediates
+//   // cat certs/cert.pem certs/chain.pem > certs/server-bundle.pem
+// , ca: [
+//     fs.readFileSync(path.join(caCertsPath, 'intermediate.crt.pem'))
+//     ,fs.readFileSync(path.join(caCertsPath, 'root.crt.pem'))
+//   ]
+// , cert: fs.readFileSync(path.join(certsPath, 'fleetshot.crt.pem'))
+//   // ca only needs to be specified for peer-certificates
+// //, ca: [ fs.readFileSync(path.join(caCertsPath, 'my-root-ca.crt.pem')) ]
+// , requestCert: false
+// , rejectUnauthorized: true
+// };
 
 // Make sure we are running node 7.6+
 const [major, minor] = process.versions.node.split('.').map(parseFloat);

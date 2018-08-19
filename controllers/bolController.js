@@ -37,7 +37,7 @@ exports.getBolId = async (req, res, next) => {
     }}
   ])
   if (lastBol.length<=0) {
-    req.body.id = 470000000000  
+    req.body.id = 10000  
   } else {
     req.body.id = lastBol[0].id+1
   }
@@ -126,10 +126,11 @@ exports.saveBolConfirmation = async(req, rest, next) => {
 }
 
 exports.sendCustomerPDF = async (req, res) => {
-  req.bol.emailDate = moment(req.bol.confirmedDate).format('HH:MM') + moment(req.bol.confirmedDate).format('YYYY-MM-DD')
+  req.bol.emailDate = moment(req.bol.confirmedDate).format('YYYY-MM-DD')
+  req.bol.emailTime = moment(req.bol.confirmedDate).format('H:MM a')
   await mail.sendPDF({
     customerEmail: req.bol.customerEmail, 
-    subject: `BOL: ${req.bol.id} VIN: ${req.bol.vin}`, 
+    subject: `${req.bol.type} VIN: ${req.bol.vin}`, 
     filename: 'bol-pdf',
     photos: req.bol.photos,
     bol: req.bol,
@@ -142,12 +143,18 @@ exports.sendCustomerPDF = async (req, res) => {
 
 exports.findBols = async (req, res) => {
   regex = new RegExp(req.body.vin, 'gi')
-  bols = await Bol.find({vin: regex, status: {$nin: ['Deleted']}})
+  bols = await Bol.find({vin: regex, status: {$nin: ['Deleted']}}).sort({created: -1}).exec(function(err, bols) {
+    if(err) {console.log(err)}
+    return bols
+  })
   res.render('bols', {title: 'Search for BOL', bols})
 }
 
 exports.getBols = async (req, res) => {
-  bols = await Bol.find({status: {$nin: ['Deleted']}})
+  bols = await Bol.find({vin: regex, status: {$nin: ['Deleted']}}).sort({created: -1}).exec(function(err, bols) {
+    if(err) {console.log(err)}
+    return bols
+  })
   res.render('bols', {title: 'Search for BOL', bols})
 }
 

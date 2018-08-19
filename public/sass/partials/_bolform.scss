@@ -11,6 +11,19 @@
     padding: 10px;
     border: none;
   }
+  .gettingPos {
+    color: $blue;
+    font-size: 1.5em;
+    margin: 8px auto;
+    text-align: center;
+  }
+  .gotPos {
+    color: $green;
+    font-size: 1.5em;
+    margin: 8px auto;
+    text-align: center;
+    // display: none;
+  }
   .separator {
     text-align: center;
     margin: 0;
@@ -38,5 +51,21 @@
     color: $red;
     margin: 0;
     padding: 0;
+  }
+  .pulsate {
+    animation: pulsate 3s ease-out;
+    animation-iteration-count: infinite; 
+    opacity: 0.5;
+  }
+  @keyframes pulsate {
+      0% { 
+          opacity: 0.3;
+      }
+      50% { 
+          opacity: 1.0;
+      }
+      100% { 
+          opacity: 0.3;
+      }
   }
 }
