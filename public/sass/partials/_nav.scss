@@ -90,10 +90,11 @@
 
 @media all and (max-width: 650px) {
   .nav {
+    flex-wrap:nowrap;
     &__section {
-      width: 100%;
+      //width: 100%;
       &--user {
-        order: -1;
+        //order: -1;
         border-bottom: 1px solid rgba(255,255,255,0.1);
         .avatar {
           min-width: 20px;
@@ -104,8 +105,11 @@
         }
       }
     }
-    &__item {
+    &__logo {
       width: 33.333333%;
+    }
+    &__item {
+      //width: 33.333333%;
     }
     &__link {
       width: 100%;
