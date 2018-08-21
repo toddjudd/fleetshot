@@ -1,9 +1,9 @@
 doctype html
 html
   head
-    title= `${title} | ${h.siteName}`
+    title= `${h.siteName}`
     link(rel='stylesheet', href='/dist/style.css')
-    link(rel="shortcut icon" type="image/png" href="/images/icons/doughnut.png")
+    link(rel="shortcut icon" type="image/png" href="/images/icons/logo.png")
     link(rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous")
     meta(name="viewport" content="width=device-width, initial-scale=1")
   body
@@ -12,7 +12,8 @@ html
         nav.nav
           .nav__section.nav__section--pages
             li.nav__item
-              a.nav__link.nav__link--logo(href="/") Home
+              a.nav__link.nav__link--logo(href="/")
+                != h.icon('logo')
             //- each item in h.menu
             //-   li.nav__item
             //-     a.nav__link(href=item.slug, class=(currentPath.startsWith(item.slug) ? 'nav__link--active' : ''))
@@ -28,7 +29,7 @@ html
                 // != h.icon('logout')
                 span Logout
               li.nav__item: a.nav__link(href="#", class=(currentPath.startsWith('/account') ? 'nav__link--active' : ''))
-                img.avatar(src=user.gravatar + 'd=retro')
+                img.avatar(src=user.gravatar + '&d=retro')
               //- li.nav__item: a.nav__link(href="/account", class=(currentPath.startsWith('/account') ? 'nav__link--active' : ''))
               //-   img.avatar(src=user.gravatar + 'd=retro')                  
             else

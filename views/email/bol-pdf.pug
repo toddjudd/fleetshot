@@ -34,7 +34,7 @@ block content
   tr
     td.photos(colspan='2')
       each photo in attachments
-        if photo.filename != 'custSig.png' && photo != 'driveSig.png'
+        if photo.filename != 'custSig.png' && photo.filename != 'driveSig.png'
           img.photo(src=`cid:${photo.cid}`)
   tr
     td.signature

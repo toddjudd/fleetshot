@@ -6,7 +6,7 @@ block content
       input(name='type' type='hidden' value=bol.type)
       label(for='vin') Vin - Last 8 Digits:
       input(name='vin' type='text' autocomplete="nope" value=(bol.vin || ''))
-      p.error.vin-error VIN must be filled out and exactly 17 digits
+      p.error.vin-error VIN must be filled out and exactly 8 digits
       label(for='customerName') Customer Name:
       input(name='customerName' type='text' autocomplete="nope" value=(bol.customerName || ''))
       p.error.customerName-error CustomerName must be filled out

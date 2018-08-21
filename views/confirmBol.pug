@@ -33,6 +33,7 @@ block content
             .details_signatures-driver-name Driver: #{bol.driver}
             .details_signatures-date Date: #{moment(bol.signedDate).calendar()}
         form(method='post' aciton=`/confirmBol/${bol.id}`)
+          p Customer eMail if requested
           input(name='customerEmail' type='email' placeholder='somebody@email.com')
           p.email-error.error A valid email must be supplied
           input.submit(name='submit' type='submit' value='Confirm' )
